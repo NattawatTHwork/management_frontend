@@ -15,6 +15,7 @@ import AdminTask from './pages/Admin/AdminTask';
 import AdminMyTask from './pages/Admin/AdminMyTask';
 import UserMyTask from './pages/User/UserMyTask';
 import UserLeave from './pages/User/UserLeave';
+import UserTimeClock from './pages/User/UserTimeClock';
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
         <Route path='/adminlogin' element={<AdminLogin />} />
         <Route path='/mytask' element={<UserMyTask />} />
         <Route path='/leave' element={<UserLeave />} />
+        <Route path='/timeclock' element={<UserTimeClock />} />
         <Route path='/login' element={<Login />} />
       </Routes>
     </ChakraProvider>
