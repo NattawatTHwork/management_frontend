@@ -22,7 +22,9 @@ const DistanceCalculator = (locationA: Location, locationB: Location): number =>
 
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
-  return earthRadius * c;
+  const distance = earthRadius * c;
+
+  return distance * 1000;
 };
 
 export default DistanceCalculator;

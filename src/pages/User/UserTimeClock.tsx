@@ -1,35 +1,5 @@
 import React, { useEffect, useState, FormEvent } from 'react'
-import {
-    Table,
-    Thead,
-    Tbody,
-    Tr,
-    Th,
-    Td,
-    TableContainer,
-    Button,
-    Drawer,
-    DrawerOverlay,
-    DrawerContent,
-    DrawerCloseButton,
-    DrawerHeader,
-    DrawerBody,
-    DrawerFooter,
-    Input,
-    Stack,
-    Box,
-    FormLabel,
-    useDisclosure,
-    Menu,
-    MenuButton,
-    MenuList,
-    MenuItem,
-    Select,
-    Flex,
-    InputGroup,
-    InputRightElement,
-    Textarea
-} from '@chakra-ui/react';
+import { Button, Box } from '@chakra-ui/react';
 import { checkLoginUser } from '../../components/auth/checkLoginUser';
 import Layout from '../../components/common/Layout';
 import Swal from 'sweetalert2';
@@ -43,6 +13,13 @@ interface TimeClock {
     clock_out: string;
 }
 
+interface Office {
+    office_id: number;
+    company: string;
+    start: string;
+    end: string;
+}
+
 const UserTimeClock = () => {
     const [timeclocks, setTimeClocks] = useState<TimeClock[]>([]);
     const [user_id, setUserId] = useState<number>(0);
@@ -51,14 +28,11 @@ const UserTimeClock = () => {
 
     useEffect(() => {
         fetchTimeClocks();
-
         const watchId = startWatchingPosition(setIsInRange);
         return () => {
             Geolocation.clearWatch(watchId);
         };
     }, []);
-
-    console.log(isInRange)
 
     const startWatchingPosition = (setIsInRangeCallback: (value: boolean) => void) => {
         return Geolocation.watchPosition(
@@ -69,14 +43,19 @@ const UserTimeClock = () => {
                 };
 
                 const targetLocation = {
-                    latitude: 18.773604102368942,
-                    longitude: 98.773604102368942,
-                    // 18.77470470638687, 98.97101352036422 home
-                    // 18.773604102368942, 98.773604102368942 office
+                    latitude: 18.77469718878088, // chiang mai home
+                    longitude: 98.97099932558713,
+                    // latitude: 18.77362222797399, // chiang mai office
+                    // longitude: 98.96630371824182,
+                    // latitude: 18.801104198434086, // land
+                    // longitude: 99.0774146616516,
+                    // latitude: 19.449025487832827, // home
+                    // longitude: 100.35006777807445,
+
                 };
 
                 const distance = DistanceCalculator(userLocation, targetLocation);
-                const isInRange = distance <= 10;
+                const isInRange = distance <= 50;
 
                 setIsInRangeCallback(isInRange);
             },
@@ -118,82 +97,113 @@ const UserTimeClock = () => {
             </Button>
         )
     } else {
-        boxbutton.push(
-            <Button key="clock-out" colorScheme="teal" size="lg" onClick={() => ClockOut()}>
-                CLOCK OUT
-            </Button>
-        )
+        if (!timeclocks[0].clock_out) {
+            boxbutton.push(
+                <Button key="clock-out" colorScheme="teal" size="lg" onClick={() => ClockOut()}>
+                    CLOCK OUT
+                </Button>
+            );
+        } else {
+            boxbutton.push(
+                <Button key="complete" colorScheme="teal" size="lg">
+                    COMPLETE
+                </Button>
+            );
+        }
     }
 
     const ClockIn = async () => {
-        try {
-            const token = localStorage.getItem('token');
-            const response = await fetch(`${process.env.REACT_APP_API_URL}/timeclock/clock_in`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: 'Bearer ' + token,
-                },
-                body: JSON.stringify({ user_id: user_id }),
-            });
-
-            const result = await response.json();
-
-            if (result.status === 'success') {
-                await Swal.fire({
-                    icon: 'success',
-                    title: 'Clock In Successful',
-                    text: 'You have successfully clocked in.',
+        if (isInRange) {
+            try {
+                const token = localStorage.getItem('token');
+                const response = await fetch(`${process.env.REACT_APP_API_URL}/timeclock/clock_in`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: 'Bearer ' + token,
+                    },
+                    body: JSON.stringify({ user_id: user_id }),
                 });
-                fetchTimeClocks();
-            } else if (result.status == 'error') {
-                await Swal.fire({
-                    icon: 'error',
-                    title: 'Failed to Clock In',
-                    text: 'There was an issue clocking in.',
-                });
-                fetchTimeClocks();
-            } else {
-                alert('Failed')
+
+                const result = await response.json();
+
+                if (result.status === 'success') {
+                    await Swal.fire({
+                        icon: 'success',
+                        title: 'Clock In Successful',
+                        text: 'You have successfully clocked in.',
+                    });
+                    fetchTimeClocks();
+                } else if (result.status == 'error') {
+                    await Swal.fire({
+                        icon: 'error',
+                        title: 'Failed to Clock In',
+                        text: 'There was an issue clocking in.',
+                    });
+                    fetchTimeClocks();
+                } else {
+                    alert('Failed')
+                }
+            } catch (error) {
+                console.error("Error:", error);
             }
-        } catch (error) {
-            console.error("Error:", error);
+        } else {
+            await Swal.fire({
+                icon: 'error',
+                title: 'Cannot Clock In',
+                text: 'You are not within the allowed range to clock in.',
+            });
         }
     }
 
     const ClockOut = async () => {
-        try {
-            const token = localStorage.getItem('token');
-            const response = await fetch(`${process.env.REACT_APP_API_URL}/timeclock/clock_out`, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: 'Bearer ' + token,
-                },
-                body: JSON.stringify({ timeclock_id: timeclocks[0]?.timeclock_id }),
-            });
-
-            const result = await response.json();
-
-            if (result.status === 'success') {
-                await Swal.fire({
-                    icon: 'success',
-                    title: 'Clock Out Successful',
-                    text: 'You have successfully clocked out.',
+        if (isInRange) {
+            try {
+                const token = localStorage.getItem('token');
+                const response = await fetch(`${process.env.REACT_APP_API_URL}/timeclock/clock_out`, {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: 'Bearer ' + token,
+                    },
+                    body: JSON.stringify({ timeclock_id: timeclocks[0]?.timeclock_id }),
                 });
-                fetchTimeClocks();
-            } else if (result.status == 'error') {
-                await Swal.fire({
-                    icon: 'error',
-                    title: 'Failed to Clock Out',
-                    text: 'There was an issue clocking out.',
-                });
-                fetchTimeClocks();
-            } else {
-                alert('Failed')
+
+                const result = await response.json();
+
+                if (result.status === 'success') {
+                    await Swal.fire({
+                        icon: 'success',
+                        title: 'Clock Out Successful',
+                        text: 'You have successfully clocked out.',
+                    });
+                    fetchTimeClocks();
+                } else if (result.status == 'error') {
+                    await Swal.fire({
+                        icon: 'error',
+                        title: 'Failed to Clock Out',
+                        text: 'There was an issue clocking out.',
+                    });
+                    fetchTimeClocks();
+                } else if (result.status == 'wait') {
+                    await Swal.fire({
+                        icon: 'warning',
+                        title: 'Cannot Clock Out Yet',
+                        text: 'You cannot clock out yet. Please wait until the specified time.',
+                    });
+                    fetchTimeClocks();
+                } else {
+                    alert('Failed')
+                }
+            } catch (error) {
+                console.error("Error:", error);
             }
-        } catch (error) {
-            console.error("Error:", error);
+        } else {
+            await Swal.fire({
+                icon: 'error',
+                title: 'Cannot Clock Out',
+                text: 'You are not within the allowed range to clock out.',
+            });
         }
     }
 
