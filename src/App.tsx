@@ -16,6 +16,9 @@ import AdminMyTask from './pages/Admin/AdminMyTask';
 import UserMyTask from './pages/User/UserMyTask';
 import UserLeave from './pages/User/UserLeave';
 import UserTimeClock from './pages/User/UserTimeClock';
+import UserTimeSheet from './pages/User/UserTimeSheet';
+import AdminTimeSheet from './pages/Admin/AdminTimeSheet';
+import SuperAdminTimeSheet from './pages/SuperAdmin/SuperAdminTimeSheet';
 
 function App() {
   return (
@@ -28,14 +31,17 @@ function App() {
         <Route path='/superadmin/position' element={<SuperAdminPosition />} />
         <Route path='/superadmin/office' element={<SuperAdminOffice />} />
         <Route path='/superadmin/task' element={<SuperAdminTask />} />
+        <Route path='/superadmin/timesheet' element={<SuperAdminTimeSheet />} />
         <Route path='/admin' element={<AdminDashboard />} />
         <Route path='/admin/user' element={<AdminUser />} />
         <Route path='/admin/task' element={<AdminTask />} />
         <Route path='/admin/mytask' element={<AdminMyTask />} />
+        <Route path='/admin/timesheet' element={<AdminTimeSheet />} />
         <Route path='/adminlogin' element={<AdminLogin />} />
         <Route path='/mytask' element={<UserMyTask />} />
         <Route path='/leave' element={<UserLeave />} />
         <Route path='/timeclock' element={<UserTimeClock />} />
+        <Route path='/timesheet' element={<UserTimeSheet />} />
         <Route path='/login' element={<Login />} />
       </Routes>
     </ChakraProvider>

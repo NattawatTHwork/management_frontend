@@ -220,6 +220,14 @@ const UserLeave = () => {
                     text: 'There was an issue adding the leave to the system.',
                 });
                 fetchLeaves();
+            } else if (result.status == 'overlap') {
+                onCloseModal1();
+                await Swal.fire({
+                    icon: 'error',
+                    title: 'Failed to Add Leave',
+                    text: 'There is an overlap in the leave dates. Please choose different dates.',
+                });
+                fetchLeaves();
             } else {
                 alert('Failed')
             }
@@ -294,6 +302,14 @@ const UserLeave = () => {
                     icon: 'error',
                     title: 'Update Failed',
                     text: 'The leave request cannot be updated as its status has been modified by an administrator.',
+                });
+                fetchLeaves();
+            } else if (result.status == 'overlap') {
+                onCloseModal3();
+                await Swal.fire({
+                    icon: 'error',
+                    title: 'Update Failed',
+                    text: 'The leave request cannot be updated due to an overlap in leave dates.',
                 });
                 fetchLeaves();
             } else {
@@ -410,7 +426,7 @@ const UserLeave = () => {
                                         || (leave.status === 1 ? 'Approved' : leave.status === 2 ? 'Pending' : 'Denied').toLowerCase().includes(searchTermLower);
                                 })
                                 .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
-                                .map((leave, index) => (
+                                .map((leave) => (
                                     <Tr key={leave.leave_requests_id}>
                                         <Td>{leave.leave_type === 1 ? 'Sick Leave' : 'Personal Leave'}</Td>
                                         <Td>{new Date(leave.start_date).toLocaleDateString('en-TH')}</Td>
@@ -583,11 +599,17 @@ const UserLeave = () => {
 
                         <DrawerBody>
                             <Stack spacing='24px'>
-                                <Input
+                                {/* <Input
                                     type='hidden'
                                     name='leave_requests_id'
                                     value={formUpdateData.leave_requests_id}
                                 />
+
+                                <Input
+                                    type='hidden'
+                                    name='user_id'
+                                    value={formUpdateData.user_id}
+                                /> */}
 
                                 <Box>
                                     <FormLabel htmlFor='leave_type'>Leave Type</FormLabel>
