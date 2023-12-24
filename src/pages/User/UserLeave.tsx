@@ -321,49 +321,60 @@ const UserLeave = () => {
     };
 
     const DeleteLeave = async (leave_requests_id: number) => {
-        try {
-            const token = localStorage.getItem('token');
-            const response = await fetch(`${process.env.REACT_APP_API_URL}/leave/delete_leave/${leave_requests_id}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: 'Bearer ' + token,
-                },
-            });
+        const result = await Swal.fire({
+            title: 'Confirm Deletion',
+            text: 'Do you want to delete this item?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Delete',
+            cancelButtonText: 'Cancel',
+        });
 
-            const result = await response.json();
+        if (result.isConfirmed) {
+            try {
+                const token = localStorage.getItem('token');
+                const response = await fetch(`${process.env.REACT_APP_API_URL}/leave/delete_leave/${leave_requests_id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: 'Bearer ' + token,
+                    },
+                });
 
-            if (result.status == 'success') {
-                await Swal.fire({
-                    icon: 'success',
-                    title: 'Task Deleted Successfully',
-                    text: 'The task has been deleted from the system.',
-                });
-                fetchLeaves();
-            } else if (result.status == 'error') {
-                await Swal.fire({
-                    icon: 'error',
-                    title: 'Failed to Delete Task',
-                    text: 'There was an issue deleting the task from the system.',
-                });
-                fetchLeaves();
-            } else if (result.status == 'nofound') {
-                await Swal.fire({
-                    icon: 'error',
-                    title: 'Leave not found',
-                    text: 'The leave request was not found in the system.',
-                });
-                fetchLeaves();
-            } else if (result.status == 'cant_update') {
-                await Swal.fire({
-                    icon: 'error',
-                    title: 'Update Failed',
-                    text: 'The leave request cannot be updated as its status has been modified by an administrator.',
-                });
-                fetchLeaves();
+                const result = await response.json();
+
+                if (result.status == 'success') {
+                    await Swal.fire({
+                        icon: 'success',
+                        title: 'Task Deleted Successfully',
+                        text: 'The task has been deleted from the system.',
+                    });
+                    fetchLeaves();
+                } else if (result.status == 'error') {
+                    await Swal.fire({
+                        icon: 'error',
+                        title: 'Failed to Delete Task',
+                        text: 'There was an issue deleting the task from the system.',
+                    });
+                    fetchLeaves();
+                } else if (result.status == 'nofound') {
+                    await Swal.fire({
+                        icon: 'error',
+                        title: 'Leave not found',
+                        text: 'The leave request was not found in the system.',
+                    });
+                    fetchLeaves();
+                } else if (result.status == 'cant_update') {
+                    await Swal.fire({
+                        icon: 'error',
+                        title: 'Update Failed',
+                        text: 'The leave request cannot be updated as its status has been modified by an administrator.',
+                    });
+                    fetchLeaves();
+                }
+            } catch (error) {
+                console.log(error);
             }
-        } catch (error) {
-            console.log(error);
         }
     };
 

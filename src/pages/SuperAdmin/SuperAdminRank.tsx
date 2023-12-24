@@ -216,37 +216,48 @@ const SuperAdminRank = () => {
     };
 
     const DeleteRank = async (rank_id: number) => {
-        try {
-            const token = localStorage.getItem('token');
-            const response = await fetch(`${process.env.REACT_APP_API_URL}/rank/delete_rank/${rank_id}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: 'Bearer ' + token,
-                },
-            });
+        const result = await Swal.fire({
+            title: 'Confirm Deletion',
+            text: 'Do you want to delete this item?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Delete',
+            cancelButtonText: 'Cancel',
+        });
 
-            const result = await response.json();
+        if (result.isConfirmed) {
+            try {
+                const token = localStorage.getItem('token');
+                const response = await fetch(`${process.env.REACT_APP_API_URL}/rank/delete_rank/${rank_id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: 'Bearer ' + token,
+                    },
+                });
 
-            if (result.status == 'success') {
-                onCloseModal2();
-                await Swal.fire({
-                    icon: 'success',
-                    title: 'Rank Deleted Successfully',
-                    text: 'The rank has been deleted from the system.',
-                });
-                fetchRanks();
-            } else {
-                onCloseModal2();
-                await Swal.fire({
-                    icon: 'error',
-                    title: 'Failed to Delete Rank',
-                    text: 'There was an issue deleting the rank from the system.',
-                });
-                fetchRanks();
+                const result = await response.json();
+
+                if (result.status == 'success') {
+                    onCloseModal2();
+                    await Swal.fire({
+                        icon: 'success',
+                        title: 'Rank Deleted Successfully',
+                        text: 'The rank has been deleted from the system.',
+                    });
+                    fetchRanks();
+                } else {
+                    onCloseModal2();
+                    await Swal.fire({
+                        icon: 'error',
+                        title: 'Failed to Delete Rank',
+                        text: 'There was an issue deleting the rank from the system.',
+                    });
+                    fetchRanks();
+                }
+            } catch (error) {
+                console.log(error);
             }
-        } catch (error) {
-            console.log(error);
         }
     };
 

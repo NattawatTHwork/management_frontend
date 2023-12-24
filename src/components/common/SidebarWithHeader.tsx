@@ -33,7 +33,8 @@ import {
     FiChevronDown,
 } from 'react-icons/fi'
 import { IconType } from 'react-icons'
-import React, { ReactNode } from 'react'
+import React, { ReactNode, useEffect, useState } from 'react'
+import { checkLoginLayout } from '../auth/checkLoginLayout'
 
 interface LinkItemProps {
     name: string
@@ -55,7 +56,7 @@ interface SidebarProps extends BoxProps {
 
 interface LayoutProps {
     children: ReactNode;
-  }
+}
 
 const LinkItems: Array<LinkItemProps> = [
     { name: 'Home', icon: FiHome },
@@ -65,7 +66,7 @@ const LinkItems: Array<LinkItemProps> = [
     { name: 'Settings', icon: FiSettings },
 ]
 
-const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
+const SidebarContent = ({ onClose, officeData, ...rest }: SidebarProps & { officeData: any }) => {
     return (
         <Box
             transition="3s ease"
@@ -78,7 +79,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
             {...rest}>
             <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
                 <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
-                    Logo
+                    {officeData.company}
                 </Text>
                 <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
             </Flex>
@@ -126,7 +127,17 @@ const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
     )
 }
 
-const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
+const MobileNav = ({ onOpen, userData, officeData, ...rest }: MobileProps & { userData: any } & { officeData: any }) => {
+    const handleLogout = async () => {
+        localStorage.removeItem('token')
+        if (userData.role === 1) {
+            window.location.href = '/adminlogin'
+
+        } else {
+            window.location.href = '/login'
+        }
+    };
+
     return (
         <Flex
             ml={{ base: 0, md: 60 }}
@@ -151,7 +162,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
                 fontSize="2xl"
                 fontFamily="monospace"
                 fontWeight="bold">
-                Logo
+                {officeData.company}
             </Text>
 
             <HStack spacing={{ base: '0', md: '6' }}>
@@ -171,9 +182,9 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
                                     alignItems="flex-start"
                                     spacing="1px"
                                     ml="2">
-                                    <Text fontSize="sm">Justina Clark</Text>
+                                    <Text fontSize="sm">{userData.rank_s}{userData.firstname} {userData.lastname}</Text>
                                     <Text fontSize="xs" color="gray.600">
-                                        Admin
+                                        {userData.role === 1 ? 'Super Admin' : userData.role === 2 ? 'Admin' : userData.role === 3 ? 'User' : 'None'}
                                     </Text>
                                 </VStack>
                                 <Box display={{ base: 'none', md: 'flex' }}>
@@ -188,7 +199,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
                             <MenuItem>Settings</MenuItem>
                             <MenuItem>Billing</MenuItem>
                             <MenuDivider />
-                            <MenuItem>Sign out</MenuItem>
+                            <MenuItem onClick={handleLogout}>Sign out</MenuItem>
                         </MenuList>
                     </Menu>
                 </Flex>
@@ -199,10 +210,50 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
 
 const SidebarWithHeader: React.FC<LayoutProps> = ({ children }) => {
     const { isOpen, onOpen, onClose } = useDisclosure()
+    const [data, setData] = useState([])
+    const [offices, setOffices] = useState([]);
+
+
+    const fetchData = async () => {
+        try {
+            const result = await checkLoginLayout();
+            setData(result);
+        } catch (error) {
+            console.error('Error fetching login layout:', error);
+        }
+    };
+
+    const fetchOffices = async () => {
+        try {
+            const token = localStorage.getItem('token');
+            const response = await fetch(process.env.REACT_APP_API_URL + '/office', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer ' + token,
+                },
+            });
+
+            const result = await response.json();
+
+            if (result.status == 'success') {
+                setOffices(result.message[0]);
+            } else {
+                console.log('fetch data rank failed')
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    useEffect(() => {
+        fetchData();
+        fetchOffices();
+    }, []);
 
     return (
         <Box minH="100vh" bg={useColorModeValue('gray.100', 'gray.900')}>
-            <SidebarContent onClose={() => onClose} display={{ base: 'none', md: 'block' }} />
+            <SidebarContent onClose={() => onClose} officeData={offices} display={{ base: 'none', md: 'block' }} />
             <Drawer
                 isOpen={isOpen}
                 placement="left"
@@ -211,11 +262,11 @@ const SidebarWithHeader: React.FC<LayoutProps> = ({ children }) => {
                 onOverlayClick={onClose}
                 size="full">
                 <DrawerContent>
-                    <SidebarContent onClose={onClose} />
+                    <SidebarContent onClose={onClose} officeData={offices} />
                 </DrawerContent>
             </Drawer>
             {/* mobilenav */}
-            <MobileNav onOpen={onOpen} />
+            <MobileNav onOpen={onOpen} userData={data} officeData={offices} />
             <Box ml={{ base: 0, md: 60 }} p="4">
                 {/* Content */}
                 {children}

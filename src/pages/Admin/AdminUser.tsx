@@ -405,37 +405,48 @@ const AdminUser = () => {
     };
 
     const DeleteUser = async (user_id: number) => {
-        try {
-            const token = localStorage.getItem('token');
-            const response = await fetch(`${process.env.REACT_APP_API_URL}/user/delete_user/${user_id}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: 'Bearer ' + token,
-                },
-            });
+        const result = await Swal.fire({
+            title: 'Confirm Deletion',
+            text: 'Do you want to delete this item?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Delete',
+            cancelButtonText: 'Cancel',
+        });
 
-            const result = await response.json();
+        if (result.isConfirmed) {
+            try {
+                const token = localStorage.getItem('token');
+                const response = await fetch(`${process.env.REACT_APP_API_URL}/user/delete_user/${user_id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: 'Bearer ' + token,
+                    },
+                });
 
-            if (result.status == 'success') {
-                onCloseModal2();
-                await Swal.fire({
-                    icon: 'success',
-                    title: 'User Deleted Successfully',
-                    text: 'The user has been deleted from the system.',
-                });
-                fetchUsers();
-            } else {
-                onCloseModal2();
-                await Swal.fire({
-                    icon: 'error',
-                    title: 'Failed to Delete User',
-                    text: 'There was an issue deleting the user from the system.',
-                });
-                fetchUsers();
+                const result = await response.json();
+
+                if (result.status == 'success') {
+                    onCloseModal2();
+                    await Swal.fire({
+                        icon: 'success',
+                        title: 'User Deleted Successfully',
+                        text: 'The user has been deleted from the system.',
+                    });
+                    fetchUsers();
+                } else {
+                    onCloseModal2();
+                    await Swal.fire({
+                        icon: 'error',
+                        title: 'Failed to Delete User',
+                        text: 'There was an issue deleting the user from the system.',
+                    });
+                    fetchUsers();
+                }
+            } catch (error) {
+                console.log(error);
             }
-        } catch (error) {
-            console.log(error);
         }
     };
 
@@ -510,15 +521,15 @@ const AdminUser = () => {
                             {users
                                 .filter((user) => {
                                     const searchTermLower = searchTerm.toLowerCase();
-                                    return user.rank.toLowerCase().includes(searchTermLower) 
-                                    || user.rank_s.toLowerCase().includes(searchTermLower) 
-                                    || user.firstname.toLowerCase().includes(searchTermLower)
-                                    || user.lastname.toLowerCase().includes(searchTermLower)
-                                    || user.position.toLowerCase().includes(searchTermLower)
-                                    || user.email.toLowerCase().includes(searchTermLower)
-                                    || user.tel.toLowerCase().includes(searchTermLower)
-                                    || (user.role === 1 ? 'Super Admin' : user.role === 2 ? 'Admin' : 'User').toLowerCase().includes(searchTermLower)                                    
-                                    || (user.status === 1 ? 'Enable' : 'Disable').toLowerCase().includes(searchTermLower);
+                                    return user.rank.toLowerCase().includes(searchTermLower)
+                                        || user.rank_s.toLowerCase().includes(searchTermLower)
+                                        || user.firstname.toLowerCase().includes(searchTermLower)
+                                        || user.lastname.toLowerCase().includes(searchTermLower)
+                                        || user.position.toLowerCase().includes(searchTermLower)
+                                        || user.email.toLowerCase().includes(searchTermLower)
+                                        || user.tel.toLowerCase().includes(searchTermLower)
+                                        || (user.role === 1 ? 'Super Admin' : user.role === 2 ? 'Admin' : 'User').toLowerCase().includes(searchTermLower)
+                                        || (user.status === 1 ? 'Enable' : 'Disable').toLowerCase().includes(searchTermLower);
                                 })
                                 .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
                                 .map((user) => (

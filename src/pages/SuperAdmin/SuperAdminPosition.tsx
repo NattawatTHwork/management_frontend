@@ -211,37 +211,48 @@ const SuperAdminPosition = () => {
     };
 
     const DeletePosition = async (position_id: number) => {
-        try {
-            const token = localStorage.getItem('token');
-            const response = await fetch(`${process.env.REACT_APP_API_URL}/position/delete_position/${position_id}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: 'Bearer ' + token,
-                },
-            });
+        const result = await Swal.fire({
+            title: 'Confirm Deletion',
+            text: 'Do you want to delete this item?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Delete',
+            cancelButtonText: 'Cancel',
+        });
 
-            const result = await response.json();
+        if (result.isConfirmed) {
+            try {
+                const token = localStorage.getItem('token');
+                const response = await fetch(`${process.env.REACT_APP_API_URL}/position/delete_position/${position_id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: 'Bearer ' + token,
+                    },
+                });
 
-            if (result.status == 'success') {
-                onCloseModal2();
-                await Swal.fire({
-                    icon: 'success',
-                    title: 'Position Deleted Successfully',
-                    text: 'The position has been deleted from the system.',
-                });
-                fetchPositions();
-            } else {
-                onCloseModal2();
-                await Swal.fire({
-                    icon: 'error',
-                    title: 'Failed to Delete Position',
-                    text: 'There was an issue deleting the position from the system.',
-                });
-                fetchPositions();
+                const result = await response.json();
+
+                if (result.status == 'success') {
+                    onCloseModal2();
+                    await Swal.fire({
+                        icon: 'success',
+                        title: 'Position Deleted Successfully',
+                        text: 'The position has been deleted from the system.',
+                    });
+                    fetchPositions();
+                } else {
+                    onCloseModal2();
+                    await Swal.fire({
+                        icon: 'error',
+                        title: 'Failed to Delete Position',
+                        text: 'There was an issue deleting the position from the system.',
+                    });
+                    fetchPositions();
+                }
+            } catch (error) {
+                console.log(error);
             }
-        } catch (error) {
-            console.log(error);
         }
     };
 

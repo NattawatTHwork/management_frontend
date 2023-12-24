@@ -320,37 +320,48 @@ const SuperAdminTask = () => {
     };
 
     const DeleteTask = async (task_id: number) => {
-        try {
-            const token = localStorage.getItem('token');
-            const response = await fetch(`${process.env.REACT_APP_API_URL}/task/delete_task/${task_id}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: 'Bearer ' + token,
-                },
-            });
+        const result = await Swal.fire({
+            title: 'Confirm Deletion',
+            text: 'Do you want to delete this item?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Delete',
+            cancelButtonText: 'Cancel',
+        });
 
-            const result = await response.json();
+        if (result.isConfirmed) {
+            try {
+                const token = localStorage.getItem('token');
+                const response = await fetch(`${process.env.REACT_APP_API_URL}/task/delete_task/${task_id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: 'Bearer ' + token,
+                    },
+                });
 
-            if (result.status == 'success') {
-                onCloseModal2();
-                await Swal.fire({
-                    icon: 'success',
-                    title: 'Task Deleted Successfully',
-                    text: 'The task has been deleted from the system.',
-                });
-                fetchTasks();
-            } else {
-                onCloseModal2();
-                await Swal.fire({
-                    icon: 'error',
-                    title: 'Failed to Delete Task',
-                    text: 'There was an issue deleting the task from the system.',
-                });
-                fetchTasks();
+                const result = await response.json();
+
+                if (result.status == 'success') {
+                    onCloseModal2();
+                    await Swal.fire({
+                        icon: 'success',
+                        title: 'Task Deleted Successfully',
+                        text: 'The task has been deleted from the system.',
+                    });
+                    fetchTasks();
+                } else {
+                    onCloseModal2();
+                    await Swal.fire({
+                        icon: 'error',
+                        title: 'Failed to Delete Task',
+                        text: 'There was an issue deleting the task from the system.',
+                    });
+                    fetchTasks();
+                }
+            } catch (error) {
+                console.log(error);
             }
-        } catch (error) {
-            console.log(error);
         }
     };
 
@@ -502,35 +513,51 @@ const SuperAdminTask = () => {
     };
 
     const DeleteResponsible = async (responsible_id: number) => {
-        try {
-            const token = localStorage.getItem('token');
-            const response = await fetch(`${process.env.REACT_APP_API_URL}/task/delete_responsible/${responsible_id}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: 'Bearer ' + token,
-                },
-            });
+        onCloseModal4();
+        const result = await Swal.fire({
+            title: 'Confirm Deletion',
+            text: 'Do you want to delete this item?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Delete',
+            cancelButtonText: 'Cancel',
+        });
 
-            const result = await response.json();
+        if (result.isConfirmed) {
+            try {
+                const token = localStorage.getItem('token');
+                const response = await fetch(`${process.env.REACT_APP_API_URL}/task/delete_responsible/${responsible_id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: 'Bearer ' + token,
+                    },
+                });
 
-            if (result.status == 'success') {
-                onOpenModal4();
-                await Swal.fire({
-                    icon: 'success',
-                    title: 'REsponsible Deleted Successfully',
-                    text: 'The responsible has been deleted from the system.',
-                });
-            } else {
-                onOpenModal4();
-                await Swal.fire({
-                    icon: 'error',
-                    title: 'Failed to Delete Responsible',
-                    text: 'There was an issue deleting the responsible from the system.',
-                });
+                const result = await response.json();
+
+                if (result.status == 'success') {
+                    await Swal.fire({
+                        icon: 'success',
+                        title: 'REsponsible Deleted Successfully',
+                        text: 'The responsible has been deleted from the system.',
+                    });
+                    onOpenModal4();
+                    fetchThisResponsible(formUpdateResponsible.task_id, formUpdateResponsible.title);
+                } else {
+                    await Swal.fire({
+                        icon: 'error',
+                        title: 'Failed to Delete Responsible',
+                        text: 'There was an issue deleting the responsible from the system.',
+                    });
+                    onOpenModal4();
+                    fetchThisResponsible(formUpdateResponsible.task_id, formUpdateResponsible.title);
+                }
+            } catch (error) {
+                console.log(error);
             }
-        } catch (error) {
-            console.log(error);
+        } else {
+            onOpenModal4();
         }
     };
 
@@ -547,8 +574,6 @@ const SuperAdminTask = () => {
         const minutes = date.getMinutes().toString().padStart(2, '0');
         return `${year}-${month}-${day}T${hours}:${minutes}`;
     };
-
-    console.log(tasks)
 
     return (
         <>
@@ -588,10 +613,10 @@ const SuperAdminTask = () => {
                             {tasks
                                 .filter((task) => {
                                     const searchTermLower = searchTerm.toLowerCase();
-                                    return task.title.toLowerCase().includes(searchTermLower) 
-                                    || task.description.toLowerCase().includes(searchTermLower)
-                                    || task.schedule.toLowerCase().includes(searchTermLower)
-                                    || (task.status === 1 ? 'Enable' : 'Disable').toLowerCase().includes(searchTermLower);
+                                    return task.title.toLowerCase().includes(searchTermLower)
+                                        || task.description.toLowerCase().includes(searchTermLower)
+                                        || task.schedule.toLowerCase().includes(searchTermLower)
+                                        || (task.status === 1 ? 'Enable' : 'Disable').toLowerCase().includes(searchTermLower);
                                 })
                                 .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
                                 .map((task) => (
