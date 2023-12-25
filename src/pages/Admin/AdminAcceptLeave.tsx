@@ -229,7 +229,7 @@ const AdminAcceptLeave = () => {
     return (
         <>
             <Layout>
-                <Flex justify="space-between" align="center" mt={4}>
+                <Flex justify="right" align="center" mt={4}>
                     <Box>
                         <InputGroup>
                             <Input

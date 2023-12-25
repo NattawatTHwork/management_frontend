@@ -31,19 +31,27 @@ import {
     FiMenu,
     FiBell,
     FiChevronDown,
+    FiCheck,
+    FiClock,
+    FiCheckSquare,
+    FiUser,
+    FiMapPin,
 } from 'react-icons/fi'
 import { IconType } from 'react-icons'
 import React, { ReactNode, useEffect, useState } from 'react'
+import { Link } from 'react-router-dom';
 import { checkLoginLayout } from '../auth/checkLoginLayout'
 
 interface LinkItemProps {
     name: string
     icon: IconType
+    link: string
 }
 
 interface NavItemProps extends FlexProps {
     icon: IconType
     children: React.ReactNode
+    link: string
 }
 
 interface MobileProps extends FlexProps {
@@ -58,15 +66,36 @@ interface LayoutProps {
     children: ReactNode;
 }
 
-const LinkItems: Array<LinkItemProps> = [
-    { name: 'Home', icon: FiHome },
-    { name: 'Trending', icon: FiTrendingUp },
-    { name: 'Explore', icon: FiCompass },
-    { name: 'Favourites', icon: FiStar },
-    { name: 'Settings', icon: FiSettings },
+const LinkItemSuperAdmin: Array<LinkItemProps> = [
+    { name: 'Dashboard', icon: FiHome, link: '/superadmin' },
+    { name: 'Accept Leave', icon: FiCheck, link: '/superadmin/accept_leave' },
+    { name: 'Time Sheet', icon: FiClock, link: '/superadmin/timesheet' },
+    { name: 'Task', icon: FiCheckSquare, link: '/superadmin/task' },
+    { name: 'User', icon: FiUser, link: '/superadmin/user' },
+    { name: 'Rank', icon: FiTrendingUp, link: '/superadmin/rank' },
+    { name: 'Position', icon: FiCompass, link: '/superadmin/position' },
+    { name: 'Office', icon: FiMapPin, link: '/superadmin/office' },
 ]
 
-const SidebarContent = ({ onClose, officeData, ...rest }: SidebarProps & { officeData: any }) => {
+const LinkItemAdmin: Array<LinkItemProps> = [
+    { name: 'Dashboard', icon: FiHome, link: '/admin' },
+    { name: 'Accept Leave', icon: FiCheck, link: '/admin/accept_leave' },
+    { name: 'Time Sheet', icon: FiClock, link: '/admin/timesheet' },
+    { name: 'My Task', icon: FiStar, link: '/admin/mytask' },
+    { name: 'Task', icon: FiCheckSquare, link: '/admin/task' },
+    { name: 'User', icon: FiUser, link: '/admin/user' },
+
+]
+
+const LinkItemUser: Array<LinkItemProps> = [
+    { name: 'Dashboard', icon: FiHome, link: '' },
+    { name: 'Time Clock', icon: FiTrendingUp, link: '/timeclock' },
+    { name: 'Time Sheet', icon: FiClock, link: '/timesheet' },
+    { name: 'My Task', icon: FiStar, link: '/mytask' },
+    { name: 'Leave', icon: FiSettings, link: '/leave' },
+]
+
+const SidebarContent = ({ onClose, userData, officeData, ...rest }: SidebarProps & { userData: any } & { officeData: any }) => {
     return (
         <Box
             transition="3s ease"
@@ -83,20 +112,36 @@ const SidebarContent = ({ onClose, officeData, ...rest }: SidebarProps & { offic
                 </Text>
                 <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
             </Flex>
-            {LinkItems.map((link) => (
-                <NavItem key={link.name} icon={link.icon}>
-                    {link.name}
-                </NavItem>
-            ))}
+            {userData.role === 1 && (
+                LinkItemSuperAdmin.map((link) => (
+                    <NavItem key={link.name} icon={link.icon} link={link.link}>
+                        <a href={link.link}>{link.name}</a>
+                    </NavItem>
+                ))
+            )}
+            {userData.role === 2 && (
+                LinkItemAdmin.map((link) => (
+                    <NavItem key={link.name} icon={link.icon} link={link.link}>
+                        <a href={link.link}>{link.name}</a>
+                    </NavItem>
+                ))
+            )}
+            {userData.role === 3 && (
+                LinkItemUser.map((link) => (
+                    <NavItem key={link.name} icon={link.icon} link={link.link}>
+                        <a href={link.link}>{link.name}</a>
+                    </NavItem>
+                ))
+            )}
         </Box>
     )
 }
 
-const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
+const NavItem = ({ icon, children, link, ...rest }: NavItemProps) => {
     return (
         <Box
-            as="a"
-            href="#"
+            as={Link}
+            to={link}
             style={{ textDecoration: 'none' }}
             _focus={{ boxShadow: 'none' }}>
             <Flex
@@ -253,7 +298,7 @@ const SidebarWithHeader: React.FC<LayoutProps> = ({ children }) => {
 
     return (
         <Box minH="100vh" bg={useColorModeValue('gray.100', 'gray.900')}>
-            <SidebarContent onClose={() => onClose} officeData={offices} display={{ base: 'none', md: 'block' }} />
+            <SidebarContent onClose={() => onClose} userData={data} officeData={offices} display={{ base: 'none', md: 'block' }} />
             <Drawer
                 isOpen={isOpen}
                 placement="left"
@@ -262,7 +307,7 @@ const SidebarWithHeader: React.FC<LayoutProps> = ({ children }) => {
                 onOverlayClick={onClose}
                 size="full">
                 <DrawerContent>
-                    <SidebarContent onClose={onClose} officeData={offices} />
+                    <SidebarContent onClose={onClose} userData={data} officeData={offices} />
                 </DrawerContent>
             </Drawer>
             {/* mobilenav */}

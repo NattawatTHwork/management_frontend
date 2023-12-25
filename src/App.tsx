@@ -38,7 +38,7 @@ function App() {
         <Route path='/admin' element={<AdminDashboard />} />
         <Route path='/admin/user' element={<AdminUser />} />
         <Route path='/admin/task' element={<AdminTask />} />
-        <Route path='/admin/mytask' element={<AdminMyTask />} />
+        <Route path='/admin/timesheet' element={<AdminMyTask />} />
         <Route path='/admin/timesheet' element={<AdminTimeSheet />} />
         <Route path='/admin/accept_leave' element={<AdminAcceptLeave />} />
         <Route path='/adminlogin' element={<AdminLogin />} />
