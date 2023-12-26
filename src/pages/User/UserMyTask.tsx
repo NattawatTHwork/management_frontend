@@ -60,6 +60,7 @@ const UserMyTask = () => {
         fetchMyTasks();
     }, []);
 
+    console.log(mytasks)
 
     const fetchMyTasks = async () => {
         try {

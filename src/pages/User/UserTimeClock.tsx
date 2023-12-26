@@ -258,8 +258,6 @@ const UserTimeClock = () => {
         }
     }
 
-    console.log(timeclocks)
-
     return (
         <>
             <Layout>
