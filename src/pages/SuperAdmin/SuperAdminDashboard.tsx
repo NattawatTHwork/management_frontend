@@ -11,7 +11,7 @@ import {
 } from '@chakra-ui/react'
 import Layout from '../../components/common/Layout'
 import { checkLoginSuperAdmin } from '../../components/auth/checkLoginSuperAdmin'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 interface StatsCardProps {
     title: string
@@ -37,10 +37,109 @@ function StatsCard(props: StatsCardProps) {
     )
 }
 
+interface superadmin {
+    total: number;
+    status_1_count: number;
+    status_0_count: number;
+}
+
+interface admin {
+    total: number;
+    status_1_count: number;
+    status_0_count: number;
+}
+
+interface user {
+    total: number;
+    status_1_count: number;
+    status_0_count: number;
+}
+
 export default function SuperAdminDashboard() {
+    const [superadmin, setSuperAdmin] = useState<superadmin>();
+    const [admin, setAdmin] = useState<admin>();
+    const [user, setUser] = useState<user>();
     useEffect(() => {
         checkLoginSuperAdmin();
+        fetchSuperAdmin();
+        fetchAdmin();
+        fetchUser();
     }, []);
+
+    const fetchSuperAdmin = async () => {
+        try {
+            const token = localStorage.getItem('token');
+            const response = await fetch(process.env.REACT_APP_API_URL + '/dashboard/superadmin', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer ' + token,
+                },
+            });
+
+            const result = await response.json();
+
+            if (result.status == 'success') {
+                setSuperAdmin(result.message[0]);
+            } else {
+                console.log('fetch data super admin failed')
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const fetchAdmin = async () => {
+        try {
+            const token = localStorage.getItem('token');
+            const response = await fetch(process.env.REACT_APP_API_URL + '/dashboard/admin', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer ' + token,
+                },
+            });
+
+            const result = await response.json();
+
+            if (result.status == 'success') {
+                setAdmin(result.message[0]);
+            } else {
+                console.log('fetch data admin failed')
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const fetchUser = async () => {
+        try {
+            const token = localStorage.getItem('token');
+            const response = await fetch(process.env.REACT_APP_API_URL + '/dashboard/user', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer ' + token,
+                },
+            });
+
+            const result = await response.json();
+
+            if (result.status == 'success') {
+                setUser(result.message[0]);
+            } else {
+                console.log('fetch data user failed')
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    console.log(superadmin)
+    console.log(admin)
+    console.log(user)
+
+
     return (
         <Layout>
             <Box maxW="7xl" mx={'auto'} pt={5} px={{ base: 2, sm: 12, md: 17 }}>
@@ -48,9 +147,15 @@ export default function SuperAdminDashboard() {
                     Super Admin Dashboard
                 </chakra.h1>
                 <SimpleGrid columns={{ base: 1, md: 3 }} spacing={{ base: 5, lg: 8 }}>
-                    <StatsCard title={'We serve'} stat={'50,000 people'} />
-                    <StatsCard title={'In'} stat={'30 different countries'} />
-                    <StatsCard title={'Who speak'} stat={'100 different languages'} />
+                    <StatsCard title={'Super Admin'} stat={superadmin?.total.toString() || ''} />
+                    <StatsCard title={'Super Admin Enable'} stat={superadmin?.status_1_count.toString() || ''} />
+                    <StatsCard title={'Super Admin Disable'} stat={superadmin?.status_0_count.toString() || ''} />
+                    <StatsCard title={'Admin'} stat={admin?.total.toString() || ''} />
+                    <StatsCard title={'Admin Enable'} stat={admin?.status_1_count.toString() || ''} />
+                    <StatsCard title={'Admin Disable'} stat={admin?.status_0_count.toString() || ''} />
+                    <StatsCard title={'User'} stat={user?.total.toString() || ''} />
+                    <StatsCard title={'User Enable'} stat={user?.status_1_count.toString() || ''} />
+                    <StatsCard title={'User Disable'} stat={user?.status_0_count.toString() || ''} />
                 </SimpleGrid>
             </Box>
         </Layout>
