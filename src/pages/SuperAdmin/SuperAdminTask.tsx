@@ -580,7 +580,7 @@ const SuperAdminTask = () => {
             <Layout>
                 <Flex justify="space-between" align="center" mt={4}>
                     <Box>
-                        <Button leftIcon={<AddIcon />} colorScheme="teal" onClick={onOpenModal1}>
+                        <Button leftIcon={<AddIcon />} colorScheme="blue" onClick={onOpenModal1}>
                             Create Task
                         </Button>
                     </Box>
@@ -601,7 +601,7 @@ const SuperAdminTask = () => {
                     </Box>
                 </Flex>
                 <TableContainer>
-                    <Table variant='striped' colorScheme='teal'>
+                    <Table variant='striped' colorScheme='blue'>
                         <Thead>
                             <Tr>
                                 <Th>Task</Th>
@@ -622,7 +622,7 @@ const SuperAdminTask = () => {
                                 .map((task) => (
                                     <Tr key={task.task_id}>
                                         <Td>{task.title}</Td>
-                                        <Td>{new Date(task.schedule).toLocaleString('en-TH')}</Td>
+                                        <Td>{new Date(task.schedule).toLocaleString('th-TH', { day: '2-digit', month: '2-digit', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: false })}</Td>
                                         <Td>
                                             <Menu>
                                                 <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>

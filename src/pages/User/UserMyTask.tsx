@@ -1,4 +1,4 @@
-import React, { useEffect, useState, FormEvent } from 'react'
+import { useEffect, useState } from 'react'
 import {
     Table,
     Thead,
@@ -24,12 +24,11 @@ import {
     MenuButton,
     MenuList,
     MenuItem,
-    Select,
     Flex,
     InputGroup,
     InputRightElement
 } from '@chakra-ui/react';
-import { AddIcon, ChevronDownIcon, DeleteIcon } from '@chakra-ui/icons';
+import { ChevronDownIcon } from '@chakra-ui/icons';
 import { checkLoginUser } from '../../components/auth/checkLoginUser';
 import Layout from '../../components/common/Layout';
 import Swal from 'sweetalert2';
@@ -59,8 +58,6 @@ const UserMyTask = () => {
     useEffect(() => {
         fetchMyTasks();
     }, []);
-
-    console.log(mytasks)
 
     const fetchMyTasks = async () => {
         try {
@@ -151,7 +148,7 @@ const UserMyTask = () => {
                     </Box>
                 </Flex>
                 <TableContainer>
-                    <Table variant='striped' colorScheme='teal'>
+                    <Table variant='striped' colorScheme='blue'>
                         <Thead>
                             <Tr>
                                 <Th>Task</Th>
@@ -172,7 +169,7 @@ const UserMyTask = () => {
                                 .map((task, index) => (
                                     <Tr key={task.task_id}>
                                         <Td>{task.title}</Td>
-                                        <Td>{new Date(task.schedule).toLocaleString('en-TH')}</Td>
+                                        <Td>{new Date(task.schedule).toLocaleString('th-TH', { day: '2-digit', month: '2-digit', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: false })}</Td>
                                         <Td>
                                             <Box as='button' borderRadius='md' bg={task.status == 1 ? 'green.500' : 'red.500'} color='white' px={4} h={8}>
                                                 {task.status == 1 ? 'Enable' : 'Disable'}
@@ -230,7 +227,7 @@ const UserMyTask = () => {
                                 <Box>
                                     <FormLabel htmlFor='schedule'>Schedule</FormLabel>
                                     <Box style={{ display: 'flex', justifyContent: 'center' }}>
-                                        <FormLabel>{new Date(mytasks[myindex]?.schedule).toLocaleString('en-TH')}</FormLabel>
+                                        <FormLabel>{new Date(mytasks[myindex]?.schedule).toLocaleString('th-TH', { day: '2-digit', month: '2-digit', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: false })}</FormLabel>
                                     </Box>
                                 </Box>
 

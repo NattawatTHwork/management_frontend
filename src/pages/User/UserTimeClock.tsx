@@ -1,4 +1,4 @@
-import React, { useEffect, useState, FormEvent } from 'react'
+import { useEffect, useState } from 'react'
 import { Button, Box, SimpleGrid, Card, FormLabel, Heading, CardBody } from '@chakra-ui/react';
 import { checkLoginUser } from '../../components/auth/checkLoginUser';
 import Layout from '../../components/common/Layout';
@@ -116,20 +116,20 @@ const UserTimeClock = () => {
     const boxbutton = [];
     if (timeclocks.length === 0) {
         boxbutton.push(
-            <Button key="clock-in" colorScheme="teal" size="lg" onClick={() => ClockIn()}>
+            <Button key="clock-in" colorScheme="blue" size="lg" onClick={() => ClockIn()}>
                 CLOCK IN
             </Button>
         )
     } else {
         if (!timeclocks[0].clock_out) {
             boxbutton.push(
-                <Button key="clock-out" colorScheme="teal" size="lg" onClick={() => ClockOut()}>
+                <Button key="clock-out" colorScheme="blue" size="lg" onClick={() => ClockOut()}>
                     CLOCK OUT
                 </Button>
             );
         } else {
             boxbutton.push(
-                <Button key="complete" colorScheme="teal" size="lg">
+                <Button key="complete" colorScheme="blue" size="lg">
                     COMPLETE
                 </Button>
             );

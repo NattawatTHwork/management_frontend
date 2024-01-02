@@ -44,7 +44,7 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPage
         <Button
           key={startPage + index}
           onClick={() => handlePageClick(startPage + index)}
-          colorScheme={currentPage === startPage + index ? 'teal' : 'gray'}
+          colorScheme={currentPage === startPage + index ? 'blue' : 'gray'}
           ml={2}
         >
           {startPage + index}

@@ -261,7 +261,7 @@ const SuperAdminPosition = () => {
             <Layout>
                 <Flex justify="space-between" align="center" mt={4}>
                     <Box>
-                        <Button leftIcon={<AddIcon />} colorScheme="teal" onClick={onOpenModal1}>
+                        <Button leftIcon={<AddIcon />} colorScheme="blue" onClick={onOpenModal1}>
                             Create Position
                         </Button>
                     </Box>
@@ -283,7 +283,7 @@ const SuperAdminPosition = () => {
                 </Flex>
 
                 <TableContainer>
-                    <Table variant='striped' colorScheme='teal'>
+                    <Table variant='striped' colorScheme='blue'>
                         <Thead>
                             <Tr>
                                 <Th>Position</Th>

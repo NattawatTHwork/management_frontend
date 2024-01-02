@@ -30,7 +30,7 @@ import {
 } from '@chakra-ui/react';
 import { checkLoginSuperAdmin } from '../../components/auth/checkLoginSuperAdmin';
 import Layout from '../../components/common/Layout';
-import { AddIcon, ChevronDownIcon } from '@chakra-ui/icons';
+import { ChevronDownIcon } from '@chakra-ui/icons';
 import Swal from 'sweetalert2';
 import Pagination from '../../components/Pagination';
 
@@ -247,7 +247,7 @@ const SuperAdminAcceptLeave = () => {
                     </Box>
                 </Flex>
                 <TableContainer>
-                    <Table variant='striped' colorScheme='teal'>
+                    <Table variant='striped' colorScheme='blue'>
                         <Thead>
                             <Tr>
                                 <Th>Task</Th>
@@ -269,8 +269,8 @@ const SuperAdminAcceptLeave = () => {
                                 .map((leave) => (
                                     <Tr key={leave.leave_requests_id}>
                                         <Td>{leave.leave_type === 1 ? 'Sick Leave' : 'Personal Leave'}</Td>
-                                        <Td>{new Date(leave.start_date).toLocaleDateString('en-TH')}</Td>
-                                        <Td>{new Date(leave.end_date).toLocaleDateString('en-TH')}</Td>
+                                        <Td>{new Date(leave.start_date).toLocaleDateString('th-TH', { day: '2-digit', month: '2-digit', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: false })}</Td>
+                                        <Td>{new Date(leave.end_date).toLocaleDateString('th-TH', { day: '2-digit', month: '2-digit', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: false })}</Td>
                                         <Td>
                                             <Box as='button' borderRadius='md' bg={leave.status === 1 ? 'green.500' : leave.status === 2 ? 'yellow.500' : 'red.500'} color='white' px={4} h={8}>
                                                 {leave.status === 1 ? 'Approved' : leave.status === 2 ? 'Pending' : 'Denied'}
@@ -328,14 +328,14 @@ const SuperAdminAcceptLeave = () => {
                                 <Box>
                                     <FormLabel htmlFor='start_date'>Start Date</FormLabel>
                                     <Box style={{ display: 'flex', justifyContent: 'center' }}>
-                                        <FormLabel htmlFor='start_date'>{new Date(formUpdateData.start_date).toLocaleDateString('en-TH')}</FormLabel>
+                                        <FormLabel htmlFor='start_date'>{new Date(formUpdateData.start_date).toLocaleDateString('th-TH', { day: '2-digit', month: '2-digit', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: false })}</FormLabel>
                                     </Box>
                                 </Box>
 
                                 <Box>
                                     <FormLabel htmlFor='end_date'>End Date</FormLabel>
                                     <Box style={{ display: 'flex', justifyContent: 'center' }}>
-                                        <FormLabel htmlFor='end_date'>{new Date(formUpdateData.end_date).toLocaleDateString('en-TH')}</FormLabel>
+                                        <FormLabel htmlFor='end_date'>{new Date(formUpdateData.end_date).toLocaleDateString('th-TH', { day: '2-digit', month: '2-digit', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: false })}</FormLabel>
                                     </Box>
                                 </Box>
 

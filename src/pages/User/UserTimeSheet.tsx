@@ -152,7 +152,7 @@ const UserTimeSheet = () => {
                     </Select>
                 </Flex>
                 <TableContainer>
-                    <Table variant='striped' colorScheme='teal'>
+                    <Table variant='striped' colorScheme='blue'>
                         <Thead>
                             <Tr>
                                 <Th>Date</Th>

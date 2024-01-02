@@ -10,6 +10,7 @@ import {
     VStack,
     Icon,
     useColorModeValue,
+    useColorMode,
     Text,
     Drawer,
     DrawerContent,
@@ -29,13 +30,14 @@ import {
     FiStar,
     FiSettings,
     FiMenu,
-    FiBell,
     FiChevronDown,
     FiCheck,
     FiClock,
     FiCheckSquare,
     FiUser,
     FiMapPin,
+    FiSun, 
+    FiMoon
 } from 'react-icons/fi'
 import { IconType } from 'react-icons'
 import React, { ReactNode, useEffect, useState } from 'react'
@@ -88,7 +90,7 @@ const LinkItemAdmin: Array<LinkItemProps> = [
 ]
 
 const LinkItemUser: Array<LinkItemProps> = [
-    { name: 'Dashboard', icon: FiHome, link: '' },
+    { name: 'Dashboard', icon: FiHome, link: '/' },
     { name: 'Time Clock', icon: FiTrendingUp, link: '/timeclock' },
     { name: 'Time Sheet', icon: FiClock, link: '/timesheet' },
     { name: 'My Task', icon: FiStar, link: '/mytask' },
@@ -152,7 +154,7 @@ const NavItem = ({ icon, children, link, ...rest }: NavItemProps) => {
                 role="group"
                 cursor="pointer"
                 _hover={{
-                    bg: 'cyan.400',
+                    bg: 'blue.900',
                     color: 'white',
                 }}
                 {...rest}>
@@ -182,6 +184,7 @@ const MobileNav = ({ onOpen, userData, officeData, ...rest }: MobileProps & { us
             window.location.href = '/login'
         }
     };
+    const { toggleColorMode, colorMode } = useColorMode();
 
     return (
         <Flex
@@ -211,7 +214,7 @@ const MobileNav = ({ onOpen, userData, officeData, ...rest }: MobileProps & { us
             </Text>
 
             <HStack spacing={{ base: '0', md: '6' }}>
-                <IconButton size="lg" variant="ghost" aria-label="open menu" icon={<FiBell />} />
+                <IconButton size="lg" variant="ghost" aria-label="open menu" icon={colorMode === 'light' ? <FiSun /> : <FiMoon />} onClick={toggleColorMode} />
                 <Flex alignItems={'center'}>
                     <Menu>
                         <MenuButton py={2} transition="all 0.3s" _focus={{ boxShadow: 'none' }}>
@@ -240,10 +243,10 @@ const MobileNav = ({ onOpen, userData, officeData, ...rest }: MobileProps & { us
                         <MenuList
                             bg={useColorModeValue('white', 'gray.900')}
                             borderColor={useColorModeValue('gray.200', 'gray.700')}>
-                            <MenuItem>Profile</MenuItem>
+                            {/* <MenuItem>Profile</MenuItem>
                             <MenuItem>Settings</MenuItem>
                             <MenuItem>Billing</MenuItem>
-                            <MenuDivider />
+                            <MenuDivider /> */}
                             <MenuItem onClick={handleLogout}>Sign out</MenuItem>
                         </MenuList>
                     </Menu>

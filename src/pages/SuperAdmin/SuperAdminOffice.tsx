@@ -143,7 +143,7 @@ const SuperAdminOffice = () => {
         <>
             <Layout>
                 <TableContainer>
-                    <Table variant='striped' colorScheme='teal'>
+                    <Table variant='striped' colorScheme='blue'>
                         <TableCaption>Imperial to metric conversion factors</TableCaption>
                         <Thead>
                             <Tr>

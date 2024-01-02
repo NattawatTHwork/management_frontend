@@ -32,7 +32,7 @@ import {
 } from '@chakra-ui/react';
 import { checkLoginUser } from '../../components/auth/checkLoginUser';
 import Layout from '../../components/common/Layout';
-import { AddIcon, ChevronDownIcon, DeleteIcon } from '@chakra-ui/icons';
+import { AddIcon, ChevronDownIcon } from '@chakra-ui/icons';
 import Swal from 'sweetalert2';
 import Pagination from '../../components/Pagination';
 
@@ -387,8 +387,6 @@ const UserLeave = () => {
         const year = date.getFullYear().toString().padStart(4, '0');
         const month = (date.getMonth() + 1).toString().padStart(2, '0');
         const day = date.getDate().toString().padStart(2, '0');
-        const hours = date.getHours().toString().padStart(2, '0');
-        const minutes = date.getMinutes().toString().padStart(2, '0');
         return `${year}-${month}-${day}`;
     };
 
@@ -397,7 +395,7 @@ const UserLeave = () => {
             <Layout>
                 <Flex justify="space-between" align="center" mt={4}>
                     <Box>
-                        <Button leftIcon={<AddIcon />} colorScheme="teal" onClick={onOpenModal1}>
+                        <Button leftIcon={<AddIcon />} colorScheme="blue" onClick={onOpenModal1}>
                             Create Leave
                         </Button>
                     </Box>
@@ -418,7 +416,7 @@ const UserLeave = () => {
                     </Box>
                 </Flex>
                 <TableContainer>
-                    <Table variant='striped' colorScheme='teal'>
+                    <Table variant='striped' colorScheme='blue'>
                         <Thead>
                             <Tr>
                                 <Th>Task</Th>
@@ -440,8 +438,8 @@ const UserLeave = () => {
                                 .map((leave) => (
                                     <Tr key={leave.leave_requests_id}>
                                         <Td>{leave.leave_type === 1 ? 'Sick Leave' : 'Personal Leave'}</Td>
-                                        <Td>{new Date(leave.start_date).toLocaleDateString('en-TH')}</Td>
-                                        <Td>{new Date(leave.end_date).toLocaleDateString('en-TH')}</Td>
+                                        <Td>{new Date(leave.start_date).toLocaleDateString('th-TH', { day: '2-digit', month: '2-digit', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: false })}</Td>
+                                        <Td>{new Date(leave.end_date).toLocaleDateString('th-TH', { day: '2-digit', month: '2-digit', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: false })}</Td>
                                         <Td>
                                             <Box as='button' borderRadius='md' bg={leave.status === 1 ? 'green.500' : leave.status === 2 ? 'yellow.500' : 'red.500'} color='white' px={4} h={8}>
                                                 {leave.status === 1 ? 'Approved' : leave.status === 2 ? 'Pending' : 'Denied'}
@@ -565,14 +563,14 @@ const UserLeave = () => {
                                 <Box>
                                     <FormLabel htmlFor='start_date'>Start Date</FormLabel>
                                     <Box style={{ display: 'flex', justifyContent: 'center' }}>
-                                        <FormLabel htmlFor='start_date'>{new Date(formUpdateData.start_date).toLocaleDateString('en-TH')}</FormLabel>
+                                        <FormLabel htmlFor='start_date'>{new Date(formUpdateData.start_date).toLocaleDateString('th-TH', { day: '2-digit', month: '2-digit', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: false })}</FormLabel>
                                     </Box>
                                 </Box>
 
                                 <Box>
                                     <FormLabel htmlFor='end_date'>End Date</FormLabel>
                                     <Box style={{ display: 'flex', justifyContent: 'center' }}>
-                                        <FormLabel htmlFor='end_date'>{new Date(formUpdateData.end_date).toLocaleDateString('en-TH')}</FormLabel>
+                                        <FormLabel htmlFor='end_date'>{new Date(formUpdateData.end_date).toLocaleDateString('th-TH', { day: '2-digit', month: '2-digit', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: false })}</FormLabel>
                                     </Box>
                                 </Box>
 

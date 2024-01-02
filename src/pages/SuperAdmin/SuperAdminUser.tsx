@@ -114,8 +114,6 @@ const SuperAdminUser = () => {
         fetchPositions();
     }, []);
 
-    console.log(viewuser)
-
     const fetchUsers = async () => {
         try {
             const token = localStorage.getItem('token');
@@ -487,7 +485,7 @@ const SuperAdminUser = () => {
             <Layout>
                 <Flex justify="space-between" align="center" mt={4}>
                     <Box>
-                        <Button leftIcon={<AddIcon />} colorScheme="teal" onClick={onOpenModal1}>
+                        <Button leftIcon={<AddIcon />} colorScheme="blue" onClick={onOpenModal1}>
                             Create User
                         </Button>
                     </Box>
@@ -509,7 +507,7 @@ const SuperAdminUser = () => {
                 </Flex>
 
                 <TableContainer>
-                    <Table variant='striped' colorScheme='teal'>
+                    <Table variant='striped' colorScheme='blue'>
                         <Thead>
                             <Tr>
                                 <Th>Name</Th>
