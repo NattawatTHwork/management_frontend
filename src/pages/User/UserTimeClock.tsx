@@ -27,44 +27,56 @@ const UserTimeClock = () => {
     const [isInRange, setIsInRange] = useState(false);
 
     useEffect(() => {
-        fetchTimeClocks();
-        fetchOffices();
-        const watchId = startWatchingPosition(setIsInRange);
-        return () => {
-            Geolocation.clearWatch(watchId);
+        const startWatching = async () => {
+            const watchId = await startWatchingPosition(setIsInRange);
+            if (watchId) {
+                return () => {
+                    Geolocation.clearWatch(watchId);
+                };
+            }
         };
+    
+        fetchTimeClocks();
+        startWatching();
     }, []);
 
-    const startWatchingPosition = (setIsInRangeCallback: (value: boolean) => void) => {
-        return Geolocation.watchPosition(
-            position => {
-                const userLocation = {
-                    latitude: position.coords.latitude,
-                    longitude: position.coords.longitude,
-                };
-
-                const targetLocation = {
-                    latitude: 18.77469718878088, // chiang mai home
-                    longitude: 98.97099932558713,
-                    // latitude: 18.77362222797399, // chiang mai office
-                    // longitude: 98.96630371824182,
-                    // latitude: 18.801104198434086, // land
-                    // longitude: 99.0774146616516,
-                    // latitude: 19.449025487832827, // home
-                    // longitude: 100.35006777807445,
-
-                };
-
-                const distance = DistanceCalculator(userLocation, targetLocation);
-                const isInRange = distance <= 50;
-
-                setIsInRangeCallback(isInRange);
-            },
-            error => console.error(error),
-            { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
-        );
+    const startWatchingPosition = async (setIsInRangeCallback: (value: boolean) => void) => {
+        try {
+            const officesData = await fetchOffices();
+    
+            if (officesData) {
+                const watchId = Geolocation.watchPosition(
+                    position => {
+                        const userLocation = {
+                            latitude: position.coords.latitude,
+                            longitude: position.coords.longitude,
+                        };
+    
+                        const targetLocation = {
+                            latitude: officesData[0].latitude,
+                            longitude: officesData[0].longitude,
+                        };
+    
+                        const distance = DistanceCalculator(userLocation, targetLocation);
+                        const isInRange = distance <= 50;
+    
+                        setIsInRangeCallback(isInRange);
+                    },
+                    error => console.error(error),
+                    { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+                );
+    
+                return watchId;
+            } else {
+                console.log('Failed to fetch offices data');
+                return null;
+            }
+        } catch (error) {
+            console.log('Error fetching offices data:', error);
+            return null;
+        }
     };
-
+    
     const fetchTimeClocks = async () => {
         try {
             const decoded = await checkLoginUser();
@@ -105,11 +117,14 @@ const UserTimeClock = () => {
 
             if (result.status == 'success') {
                 setOffices(result.message);
+                return result.message;
             } else {
-                console.log('fetch data rank failed')
+                console.log('fetch data rank failed');
+                return null;
             }
         } catch (error) {
             console.log(error);
+            return null;
         }
     };
 
@@ -144,6 +159,7 @@ const UserTimeClock = () => {
             showCancelButton: true,
             confirmButtonText: 'Yes, Clock In',
             cancelButtonText: 'Cancel',
+            confirmButtonColor: '#3182CE',
         });
         if (confirmClockIn.isConfirmed) {
             if (isInRange) {
@@ -165,6 +181,7 @@ const UserTimeClock = () => {
                             icon: 'success',
                             title: 'Clock In Successful',
                             text: 'You have successfully clocked in.',
+                            confirmButtonColor: '#3182CE',
                         });
                         fetchTimeClocks();
                     } else if (result.status == 'error') {
@@ -172,6 +189,7 @@ const UserTimeClock = () => {
                             icon: 'error',
                             title: 'Failed to Clock In',
                             text: 'There was an issue clocking in.',
+                            confirmButtonColor: '#3182CE',
                         });
                         fetchTimeClocks();
                     } else if (result.status == 'leave') {
@@ -179,6 +197,7 @@ const UserTimeClock = () => {
                             icon: 'warning',
                             title: 'Today you are on leave',
                             text: 'There was an issue clocking in.',
+                            confirmButtonColor: '#3182CE',
                         });
                         fetchTimeClocks();
                     } else {
@@ -192,6 +211,7 @@ const UserTimeClock = () => {
                     icon: 'error',
                     title: 'Cannot Clock In',
                     text: 'You are not within the allowed range to clock in.',
+                    confirmButtonColor: '#3182CE',
                 });
             }
         }
@@ -205,6 +225,7 @@ const UserTimeClock = () => {
             showCancelButton: true,
             confirmButtonText: 'Yes, Clock Out',
             cancelButtonText: 'Cancel',
+            confirmButtonColor: '#3182CE',
         });
         if (confirmClockOut.isConfirmed) {
             if (isInRange) {
@@ -226,6 +247,7 @@ const UserTimeClock = () => {
                             icon: 'success',
                             title: 'Clock Out Successful',
                             text: 'You have successfully clocked out.',
+                            confirmButtonColor: '#3182CE',
                         });
                         fetchTimeClocks();
                     } else if (result.status == 'error') {
@@ -233,6 +255,7 @@ const UserTimeClock = () => {
                             icon: 'error',
                             title: 'Failed to Clock Out',
                             text: 'There was an issue clocking out.',
+                            confirmButtonColor: '#3182CE',
                         });
                         fetchTimeClocks();
                     } else if (result.status == 'wait') {
@@ -240,6 +263,7 @@ const UserTimeClock = () => {
                             icon: 'warning',
                             title: 'Cannot Clock Out Yet',
                             text: 'You cannot clock out yet. Please wait until the specified time.',
+                            confirmButtonColor: '#3182CE',
                         });
                         fetchTimeClocks();
                     } else {
@@ -253,6 +277,7 @@ const UserTimeClock = () => {
                     icon: 'error',
                     title: 'Cannot Clock Out',
                     text: 'You are not within the allowed range to clock out.',
+                    confirmButtonColor: '#3182CE',
                 });
             }
         }

@@ -283,6 +283,7 @@ const SuperAdminUser = () => {
                 icon: 'error',
                 title: 'Incomplete Form',
                 text: 'Please fill in all required fields.',
+                confirmButtonColor: '#3182CE',
             });
             return;
         }
@@ -318,6 +319,7 @@ const SuperAdminUser = () => {
                     icon: 'success',
                     title: 'User Added Successfully',
                     text: 'The user has been added to the system.',
+                    confirmButtonColor: '#3182CE',
                 });
                 fetchUsers();
             } else if (result.status == 'error') {
@@ -326,6 +328,7 @@ const SuperAdminUser = () => {
                     icon: 'error',
                     title: 'Failed to Add User',
                     text: 'There was an issue adding the user to the system.',
+                    confirmButtonColor: '#3182CE',
                 });
                 fetchUsers();
             } else {
@@ -345,6 +348,7 @@ const SuperAdminUser = () => {
                 icon: 'error',
                 title: 'Incomplete Form',
                 text: 'Please fill in all required fields.',
+                confirmButtonColor: '#3182CE',
             });
             return;
         }
@@ -385,6 +389,7 @@ const SuperAdminUser = () => {
                     icon: 'success',
                     title: 'User Updated Successfully',
                     text: 'The user has been updated in the system.',
+                    confirmButtonColor: '#3182CE',
                 });
                 fetchUsers();
             } else if (result.status == 'error') {
@@ -393,6 +398,7 @@ const SuperAdminUser = () => {
                     icon: 'error',
                     title: 'Failed to Update User',
                     text: 'There was an issue updating the user in the system.',
+                    confirmButtonColor: '#3182CE',
                 });
                 fetchUsers();
             } else {
@@ -411,6 +417,7 @@ const SuperAdminUser = () => {
             showCancelButton: true,
             confirmButtonText: 'Delete',
             cancelButtonText: 'Cancel',
+            confirmButtonColor: '#3182CE',
         });
 
         if (result.isConfirmed) {
@@ -432,6 +439,7 @@ const SuperAdminUser = () => {
                         icon: 'success',
                         title: 'User Deleted Successfully',
                         text: 'The user has been deleted from the system.',
+                        confirmButtonColor: '#3182CE',
                     });
                     fetchUsers();
                 } else {
@@ -440,6 +448,7 @@ const SuperAdminUser = () => {
                         icon: 'error',
                         title: 'Failed to Delete User',
                         text: 'There was an issue deleting the user from the system.',
+                        confirmButtonColor: '#3182CE',
                     });
                     fetchUsers();
                 }
@@ -467,12 +476,14 @@ const SuperAdminUser = () => {
                     icon: 'success',
                     title: 'Verification Code Generated Successfully',
                     text: 'The verification code has been generated.',
+                    confirmButtonColor: '#3182CE',
                 });
             } else {
                 await Swal.fire({
                     icon: 'error',
                     title: 'Failed to Generate Verification Code',
                     text: 'There was an issue generating the verification code.',
+                    confirmButtonColor: '#3182CE',
                 });
             }
         } catch (error) {

@@ -102,6 +102,7 @@ const AdminMyTask = () => {
                     icon: 'success',
                     title: 'Task Accepted Successfully',
                     text: 'The task has been accepted to the system.',
+                    confirmButtonColor: '#3182CE',
                 });
                 fetchMyTasks();
             } else if (result.status == 'error') {
@@ -109,6 +110,7 @@ const AdminMyTask = () => {
                     icon: 'error',
                     title: 'Failed to Accept Task',
                     text: 'There was an issue adding the accept to the system.',
+                    confirmButtonColor: '#3182CE',
                 });
                 fetchMyTasks();
             } else {

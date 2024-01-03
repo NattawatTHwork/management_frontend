@@ -216,6 +216,7 @@ const SuperAdminTask = () => {
                 icon: 'error',
                 title: 'Incomplete Form',
                 text: 'Please fill in all required fields.',
+                confirmButtonColor: '#3182CE',
             });
             return;
         }
@@ -244,6 +245,7 @@ const SuperAdminTask = () => {
                     icon: 'success',
                     title: 'Task Added Successfully',
                     text: 'The task has been added to the system.',
+                    confirmButtonColor: '#3182CE',
                 });
                 fetchTasks();
             } else if (result.status == 'error') {
@@ -252,6 +254,7 @@ const SuperAdminTask = () => {
                     icon: 'error',
                     title: 'Failed to Add Task',
                     text: 'There was an issue adding the task to the system.',
+                    confirmButtonColor: '#3182CE',
                 });
                 fetchTasks();
             } else {
@@ -271,6 +274,7 @@ const SuperAdminTask = () => {
                 icon: 'error',
                 title: 'Incomplete Form',
                 text: 'Please fill in all required fields.',
+                confirmButtonColor: '#3182CE',
             });
             return;
         }
@@ -301,6 +305,7 @@ const SuperAdminTask = () => {
                     icon: 'success',
                     title: 'Task Updated Successfully',
                     text: 'The task has been updated in the system.',
+                    confirmButtonColor: '#3182CE',
                 });
                 fetchTasks();
             } else if (result.status == 'error') {
@@ -309,6 +314,7 @@ const SuperAdminTask = () => {
                     icon: 'error',
                     title: 'Failed to Update Task',
                     text: 'There was an issue updating the task in the system.',
+                    confirmButtonColor: '#3182CE',
                 });
                 fetchTasks();
             } else {
@@ -327,6 +333,7 @@ const SuperAdminTask = () => {
             showCancelButton: true,
             confirmButtonText: 'Delete',
             cancelButtonText: 'Cancel',
+            confirmButtonColor: '#3182CE',
         });
 
         if (result.isConfirmed) {
@@ -348,6 +355,7 @@ const SuperAdminTask = () => {
                         icon: 'success',
                         title: 'Task Deleted Successfully',
                         text: 'The task has been deleted from the system.',
+                        confirmButtonColor: '#3182CE',
                     });
                     fetchTasks();
                 } else {
@@ -356,6 +364,7 @@ const SuperAdminTask = () => {
                         icon: 'error',
                         title: 'Failed to Delete Task',
                         text: 'There was an issue deleting the task from the system.',
+                        confirmButtonColor: '#3182CE',
                     });
                     fetchTasks();
                 }
@@ -433,6 +442,7 @@ const SuperAdminTask = () => {
                 icon: 'error',
                 title: 'Incomplete Form',
                 text: 'Please fill in all required fields.',
+                confirmButtonColor: '#3182CE',
             });
             return;
         }
@@ -456,6 +466,7 @@ const SuperAdminTask = () => {
                     icon: 'success',
                     title: 'Responsible Added Successfully',
                     text: 'The responsible has been added to the system.',
+                    confirmButtonColor: '#3182CE',
                 });
                 fetchTasks();
             } else if (result.status == 'error') {
@@ -464,6 +475,7 @@ const SuperAdminTask = () => {
                     icon: 'error',
                     title: 'Failed to Add Responsible',
                     text: 'There was an issue adding the responsible to the system.',
+                    confirmButtonColor: '#3182CE',
                 });
                 fetchTasks();
             } else {
@@ -521,6 +533,7 @@ const SuperAdminTask = () => {
             showCancelButton: true,
             confirmButtonText: 'Delete',
             cancelButtonText: 'Cancel',
+            confirmButtonColor: '#3182CE',
         });
 
         if (result.isConfirmed) {
@@ -541,6 +554,7 @@ const SuperAdminTask = () => {
                         icon: 'success',
                         title: 'REsponsible Deleted Successfully',
                         text: 'The responsible has been deleted from the system.',
+                        confirmButtonColor: '#3182CE',
                     });
                     onOpenModal4();
                     fetchThisResponsible(formUpdateResponsible.task_id, formUpdateResponsible.title);
@@ -549,6 +563,7 @@ const SuperAdminTask = () => {
                         icon: 'error',
                         title: 'Failed to Delete Responsible',
                         text: 'There was an issue deleting the responsible from the system.',
+                        confirmButtonColor: '#3182CE',
                     });
                     onOpenModal4();
                     fetchThisResponsible(formUpdateResponsible.task_id, formUpdateResponsible.title);

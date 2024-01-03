@@ -51,11 +51,13 @@ const SuperAdminRank = () => {
     const [formCreateData, setFormCreateData] = useState({
         rank: '',
         rank_s: '',
+        level: '',
     });
     const [formUpdateData, setFormUpdateData] = useState({
         rank_id: '',
         rank: '',
         rank_s: '',
+        level: '',
     });
 
     useEffect(() => {
@@ -130,6 +132,18 @@ const SuperAdminRank = () => {
 
     const CreateRankSubmit = async (e: FormEvent) => {
         e.preventDefault();
+
+        if (!formCreateData.rank || !formCreateData.rank_s || !formCreateData.level) {
+            onCloseModal1();
+            Swal.fire({
+                icon: 'error',
+                title: 'Incomplete Form',
+                text: 'Please fill in all required fields.',
+                confirmButtonColor: '#3182CE',
+            });
+            return;
+        }
+
         try {
             const token = localStorage.getItem('token');
             const response = await fetch(`${process.env.REACT_APP_API_URL}/rank/create_rank`, {
@@ -148,11 +162,13 @@ const SuperAdminRank = () => {
                 setFormCreateData({
                     rank: '',
                     rank_s: '',
+                    level: '',
                 });
                 await Swal.fire({
                     icon: 'success',
                     title: 'Rank Added Successfully',
                     text: 'The rank has been added to the system.',
+                    confirmButtonColor: '#3182CE',
                 });
                 fetchRanks();
             } else if (result.status == 'error') {
@@ -161,6 +177,7 @@ const SuperAdminRank = () => {
                     icon: 'error',
                     title: 'Failed to Add Rank',
                     text: 'There was an issue adding the rank to the system.',
+                    confirmButtonColor: '#3182CE',
                 });
                 fetchRanks();
             } else {
@@ -173,6 +190,18 @@ const SuperAdminRank = () => {
 
     const UpdateRankSubmit = async (e: FormEvent) => {
         e.preventDefault();
+
+        if (!formUpdateData.rank || !formUpdateData.rank_s || !formUpdateData.level) {
+            onCloseModal2();
+            Swal.fire({
+                icon: 'error',
+                title: 'Incomplete Form',
+                text: 'Please fill in all required fields.',
+                confirmButtonColor: '#3182CE',
+            });
+            return;
+        }
+
         try {
             const token = localStorage.getItem('token');
             const response = await fetch(`${process.env.REACT_APP_API_URL}/rank/update_rank/${formUpdateData.rank_id}`, {
@@ -192,11 +221,13 @@ const SuperAdminRank = () => {
                     rank_id: '',
                     rank: '',
                     rank_s: '',
+                    level: '',
                 });
                 await Swal.fire({
                     icon: 'success',
                     title: 'Rank Updated Successfully',
                     text: 'The rank has been updated in the system.',
+                    confirmButtonColor: '#3182CE',
                 });
                 fetchRanks();
             } else if (result.status == 'error') {
@@ -205,6 +236,7 @@ const SuperAdminRank = () => {
                     icon: 'error',
                     title: 'Failed to Update Rank',
                     text: 'There was an issue updating the rank in the system.',
+                    confirmButtonColor: '#3182CE',
                 });
                 fetchRanks();
             } else {
@@ -223,6 +255,7 @@ const SuperAdminRank = () => {
             showCancelButton: true,
             confirmButtonText: 'Delete',
             cancelButtonText: 'Cancel',
+            confirmButtonColor: '#3182CE',
         });
 
         if (result.isConfirmed) {
@@ -244,6 +277,7 @@ const SuperAdminRank = () => {
                         icon: 'success',
                         title: 'Rank Deleted Successfully',
                         text: 'The rank has been deleted from the system.',
+                        confirmButtonColor: '#3182CE',
                     });
                     fetchRanks();
                 } else {
@@ -252,6 +286,7 @@ const SuperAdminRank = () => {
                         icon: 'error',
                         title: 'Failed to Delete Rank',
                         text: 'There was an issue deleting the rank from the system.',
+                        confirmButtonColor: '#3182CE',
                     });
                     fetchRanks();
                 }
@@ -363,6 +398,17 @@ const SuperAdminRank = () => {
                                         placeholder='Please enter short rank'
                                     />
                                 </Box>
+
+                                <Box>
+                                    <FormLabel htmlFor='level'>Level</FormLabel>
+                                    <Input
+                                        type='text'
+                                        name='level'
+                                        value={formCreateData.level}
+                                        onChange={handleInputCreateChange}
+                                        placeholder='Please enter level'
+                                    />
+                                </Box>
                             </Stack>
                         </DrawerBody>
 
@@ -413,6 +459,17 @@ const SuperAdminRank = () => {
                                         value={formUpdateData.rank_s}
                                         onChange={handleInputUpdateChange}
                                         placeholder='Please enter short rank'
+                                    />
+                                </Box>
+
+                                <Box>
+                                    <FormLabel htmlFor='level'>Level</FormLabel>
+                                    <Input
+                                        type='text'
+                                        name='level'
+                                        value={formUpdateData.level}
+                                        onChange={handleInputUpdateChange}
+                                        placeholder='Please enter level'
                                     />
                                 </Box>
                             </Stack>

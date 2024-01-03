@@ -149,6 +149,7 @@ const SuperAdminPosition = () => {
                     icon: 'success',
                     title: 'Position Added Successfully',
                     text: 'The position has been added to the system.',
+                    confirmButtonColor: '#3182CE',
                 });
                 fetchPositions();
             } else if (result.status == 'error') {
@@ -157,6 +158,7 @@ const SuperAdminPosition = () => {
                     icon: 'error',
                     title: 'Failed to Add Position',
                     text: 'There was an issue adding the position to the system.',
+                    confirmButtonColor: '#3182CE',
                 });
                 fetchPositions();
             } else {
@@ -192,6 +194,7 @@ const SuperAdminPosition = () => {
                     icon: 'success',
                     title: 'Position Updated Successfully',
                     text: 'The position has been updated in the system.',
+                    confirmButtonColor: '#3182CE',
                 });
                 fetchPositions();
             } else if (result.status == 'error') {
@@ -200,6 +203,7 @@ const SuperAdminPosition = () => {
                     icon: 'error',
                     title: 'Failed to Update Position',
                     text: 'There was an issue updating the position in the system.',
+                    confirmButtonColor: '#3182CE',
                 });
                 fetchPositions();
             } else {
@@ -218,6 +222,7 @@ const SuperAdminPosition = () => {
             showCancelButton: true,
             confirmButtonText: 'Delete',
             cancelButtonText: 'Cancel',
+            confirmButtonColor: '#3182CE',
         });
 
         if (result.isConfirmed) {
@@ -239,6 +244,7 @@ const SuperAdminPosition = () => {
                         icon: 'success',
                         title: 'Position Deleted Successfully',
                         text: 'The position has been deleted from the system.',
+                        confirmButtonColor: '#3182CE',
                     });
                     fetchPositions();
                 } else {
@@ -247,6 +253,7 @@ const SuperAdminPosition = () => {
                         icon: 'error',
                         title: 'Failed to Delete Position',
                         text: 'There was an issue deleting the position from the system.',
+                        confirmButtonColor: '#3182CE',
                     });
                     fetchPositions();
                 }

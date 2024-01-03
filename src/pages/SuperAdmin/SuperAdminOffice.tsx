@@ -36,6 +36,8 @@ interface Office {
     company: string;
     start: string;
     end: string;
+    latitude: number;
+    longitude: number;
 }
 
 const SuperAdminOffice = () => {
@@ -46,6 +48,8 @@ const SuperAdminOffice = () => {
         company: '',
         start: '',
         end: '',
+        latitude: 0,
+        longitude: 0,
     });
 
     useEffect(() => {
@@ -82,6 +86,8 @@ const SuperAdminOffice = () => {
             company: office.company,
             start: office.start,
             end: office.end,
+            latitude: office.latitude,
+            longitude: office.longitude,
         });
         onOpenModal1();
     }
@@ -116,11 +122,14 @@ const SuperAdminOffice = () => {
                     company: '',
                     start: '',
                     end: '',
+                    latitude: 0,
+                    longitude: 0,
                 });
                 await Swal.fire({
                     icon: 'success',
                     title: 'Office Updated Successfully',
                     text: 'The office has been updated in the system.',
+                    confirmButtonColor: '#3182CE',
                 });
                 fetchOffices();
             } else if (result.status == 'error') {
@@ -129,6 +138,7 @@ const SuperAdminOffice = () => {
                     icon: 'error',
                     title: 'Failed to Update Office',
                     text: 'There was an issue updating the office in the system.',
+                    confirmButtonColor: '#3182CE',
                 });
                 fetchOffices();
             } else {
@@ -150,6 +160,8 @@ const SuperAdminOffice = () => {
                                 <Th>Company</Th>
                                 <Th>Start</Th>
                                 <Th>End</Th>
+                                <Th>Latitude</Th>
+                                <Th>Longitude</Th>
                                 <Th>Actions</Th>
                             </Tr>
                         </Thead>
@@ -159,6 +171,8 @@ const SuperAdminOffice = () => {
                                     <Td>{office.company}</Td>
                                     <Td>{office.start.toLocaleString()}</Td>
                                     <Td>{office.end.toLocaleString()}</Td>
+                                    <Td>{office.latitude}</Td>
+                                    <Td>{office.longitude}</Td>
                                     <Td>
                                         <Menu>
                                             <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
@@ -224,6 +238,28 @@ const SuperAdminOffice = () => {
                                         value={formUpdateData.end}
                                         onChange={handleInputUpdateChange}
                                         placeholder='Please enter end'
+                                    />
+                                </Box>
+
+                                <Box>
+                                    <FormLabel htmlFor='latitude'>Latitude</FormLabel>
+                                    <Input
+                                        type='text'
+                                        name='latitude'
+                                        value={formUpdateData.latitude}
+                                        onChange={handleInputUpdateChange}
+                                        placeholder='Please enter latitude'
+                                    />
+                                </Box>
+
+                                <Box>
+                                    <FormLabel htmlFor='longitude'>Longitude</FormLabel>
+                                    <Input
+                                        type='text'
+                                        name='longitude'
+                                        value={formUpdateData.longitude}
+                                        onChange={handleInputUpdateChange}
+                                        placeholder='Please enter longitude'
                                     />
                                 </Box>
                             </Stack>

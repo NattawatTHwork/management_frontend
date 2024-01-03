@@ -187,6 +187,7 @@ const UserLeave = () => {
                 icon: 'error',
                 title: 'Incomplete Form',
                 text: 'Please fill in all required fields.',
+                confirmButtonColor: '#3182CE',
             });
             return;
         }
@@ -210,6 +211,7 @@ const UserLeave = () => {
                     icon: 'success',
                     title: 'Leave Added Successfully',
                     text: 'The leave has been added to the system.',
+                    confirmButtonColor: '#3182CE',
                 });
                 fetchLeaves();
             } else if (result.status == 'error') {
@@ -218,6 +220,7 @@ const UserLeave = () => {
                     icon: 'error',
                     title: 'Failed to Add Leave',
                     text: 'There was an issue adding the leave to the system.',
+                    confirmButtonColor: '#3182CE',
                 });
                 fetchLeaves();
             } else if (result.status == 'overlap') {
@@ -226,6 +229,7 @@ const UserLeave = () => {
                     icon: 'error',
                     title: 'Failed to Add Leave',
                     text: 'There is an overlap in the leave dates. Please choose different dates.',
+                    confirmButtonColor: '#3182CE',
                 });
                 fetchLeaves();
             } else {
@@ -245,6 +249,7 @@ const UserLeave = () => {
                 icon: 'error',
                 title: 'Incomplete Form',
                 text: 'Please fill in all required fields.',
+                confirmButtonColor: '#3182CE',
             });
             return;
         }
@@ -278,6 +283,7 @@ const UserLeave = () => {
                     icon: 'success',
                     title: 'Leave Updated Successfully',
                     text: 'The leave has been updated in the system.',
+                    confirmButtonColor: '#3182CE',
                 });
                 fetchLeaves();
             } else if (result.status == 'error') {
@@ -286,6 +292,7 @@ const UserLeave = () => {
                     icon: 'error',
                     title: 'Failed to Update Leave',
                     text: 'There was an issue updating the leave in the system.',
+                    confirmButtonColor: '#3182CE',
                 });
                 fetchLeaves();
             } else if (result.status == 'nofound') {
@@ -294,6 +301,7 @@ const UserLeave = () => {
                     icon: 'error',
                     title: 'Leave not found',
                     text: 'The leave request was not found in the system.',
+                    confirmButtonColor: '#3182CE',
                 });
                 fetchLeaves();
             } else if (result.status == 'cant_update') {
@@ -302,6 +310,7 @@ const UserLeave = () => {
                     icon: 'error',
                     title: 'Update Failed',
                     text: 'The leave request cannot be updated as its status has been modified by an administrator.',
+                    confirmButtonColor: '#3182CE',
                 });
                 fetchLeaves();
             } else if (result.status == 'overlap') {
@@ -310,6 +319,7 @@ const UserLeave = () => {
                     icon: 'error',
                     title: 'Update Failed',
                     text: 'The leave request cannot be updated due to an overlap in leave dates.',
+                    confirmButtonColor: '#3182CE',
                 });
                 fetchLeaves();
             } else {
@@ -328,6 +338,7 @@ const UserLeave = () => {
             showCancelButton: true,
             confirmButtonText: 'Delete',
             cancelButtonText: 'Cancel',
+            confirmButtonColor: '#3182CE',
         });
 
         if (result.isConfirmed) {
@@ -348,6 +359,7 @@ const UserLeave = () => {
                         icon: 'success',
                         title: 'Task Deleted Successfully',
                         text: 'The task has been deleted from the system.',
+                        confirmButtonColor: '#3182CE',
                     });
                     fetchLeaves();
                 } else if (result.status == 'error') {
@@ -355,6 +367,7 @@ const UserLeave = () => {
                         icon: 'error',
                         title: 'Failed to Delete Task',
                         text: 'There was an issue deleting the task from the system.',
+                        confirmButtonColor: '#3182CE',
                     });
                     fetchLeaves();
                 } else if (result.status == 'nofound') {
@@ -362,6 +375,7 @@ const UserLeave = () => {
                         icon: 'error',
                         title: 'Leave not found',
                         text: 'The leave request was not found in the system.',
+                        confirmButtonColor: '#3182CE',
                     });
                     fetchLeaves();
                 } else if (result.status == 'cant_update') {
@@ -369,6 +383,7 @@ const UserLeave = () => {
                         icon: 'error',
                         title: 'Update Failed',
                         text: 'The leave request cannot be updated as its status has been modified by an administrator.',
+                        confirmButtonColor: '#3182CE',
                     });
                     fetchLeaves();
                 }
@@ -438,8 +453,8 @@ const UserLeave = () => {
                                 .map((leave) => (
                                     <Tr key={leave.leave_requests_id}>
                                         <Td>{leave.leave_type === 1 ? 'Sick Leave' : 'Personal Leave'}</Td>
-                                        <Td>{new Date(leave.start_date).toLocaleDateString('th-TH', { day: '2-digit', month: '2-digit', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: false })}</Td>
-                                        <Td>{new Date(leave.end_date).toLocaleDateString('th-TH', { day: '2-digit', month: '2-digit', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: false })}</Td>
+                                        <Td>{new Date(leave.start_date).toLocaleDateString('th-TH', { day: '2-digit', month: '2-digit', year: 'numeric' })}</Td>
+                                        <Td>{new Date(leave.end_date).toLocaleDateString('th-TH', { day: '2-digit', month: '2-digit', year: 'numeric' })}</Td>
                                         <Td>
                                             <Box as='button' borderRadius='md' bg={leave.status === 1 ? 'green.500' : leave.status === 2 ? 'yellow.500' : 'red.500'} color='white' px={4} h={8}>
                                                 {leave.status === 1 ? 'Approved' : leave.status === 2 ? 'Pending' : 'Denied'}

@@ -17,7 +17,7 @@ import { useEffect, useState, FormEvent } from 'react'
 import { checkLogin } from '../components/auth/checkLogin';
 import Swal from 'sweetalert2';
 
-export default function AdminLogin() {
+export default function SuperAdminLogin() {
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -37,7 +37,7 @@ export default function AdminLogin() {
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
         try {
-            const response = await fetch(process.env.REACT_APP_API_URL + "/login/adminlogin", {
+            const response = await fetch(process.env.REACT_APP_API_URL + "/login/superadminlogin", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -55,24 +55,28 @@ export default function AdminLogin() {
                     icon: 'error',
                     title: result.message,
                     text: 'This account does not exist in the system.',
+                    confirmButtonColor: '#3182CE',
                 });
             } else if (result.status == 'disable') {
                 await Swal.fire({
                     icon: 'error',
                     title: result.message,
                     text: 'This account disable.',
+                    confirmButtonColor: '#3182CE',
                 });
             } else if (result.status == 'norights') {
                 await Swal.fire({
                     icon: 'error',
                     title: result.message,
                     text: 'This account no rights.',
+                    confirmButtonColor: '#3182CE',
                 });
             } else if (result.status == 'failed') {
                 await Swal.fire({
                     icon: 'error',
                     title: result.message,
                     text: 'This password is incorrect.',
+                    confirmButtonColor: '#3182CE',
                 });
             } else {
                 alert('Login Failed')
@@ -91,9 +95,6 @@ export default function AdminLogin() {
             <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
                 <Stack align={'center'}>
                     <Heading fontSize={'4xl'}>Sign in to your account</Heading>
-                    {/* <Text fontSize={'lg'} color={'gray.600'}>
-                        to enjoy all of our cool <Text color={'blue.400'}>features</Text> ✌️
-                    </Text> */}
                 </Stack>
                 <Box
                     rounded={'lg'}
@@ -102,7 +103,7 @@ export default function AdminLogin() {
                     p={8}>
                     <Stack spacing={4}>
                         <FormControl id="email">
-                            <FormLabel>Email address</FormLabel>
+                            <FormLabel>Email Address</FormLabel>
                             <Input type="email" name='email' value={formData.email} onChange={handleInputChange} />
                         </FormControl>
                         <FormControl id="password">
@@ -114,8 +115,8 @@ export default function AdminLogin() {
                                 direction={{ base: 'column', sm: 'row' }}
                                 align={'start'}
                                 justify={'space-between'}>
-                                <Checkbox>Remember me</Checkbox>
-                                <Text color={'blue.400'}>Forgot password?</Text>
+                                {/* <Checkbox>Remember me</Checkbox> */}
+                                {/* <Text color={'blue.400'}>Forgot password?</Text> */}
                             </Stack>
                             <Button
                                 bg={'blue.400'}

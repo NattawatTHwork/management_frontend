@@ -60,30 +60,35 @@ export default function Login() {
                     icon: 'error',
                     title: result.message,
                     text: 'This account does not exist in the system.',
+                    confirmButtonColor: '#3182CE',
                 });
             } else if (result.status == 'disable') {
                 await Swal.fire({
                     icon: 'error',
                     title: result.message,
                     text: 'This account disable.',
+                    confirmButtonColor: '#3182CE',
                 });
             } else if (result.status == 'norights') {
                 await Swal.fire({
                     icon: 'error',
                     title: result.message,
                     text: 'This account no rights.',
+                    confirmButtonColor: '#3182CE',
                 });
             } else if (result.status == 'noverify') {
                 await Swal.fire({
                     icon: 'error',
                     title: result.message,
                     text: 'This code verify is incorrect.',
+                    confirmButtonColor: '#3182CE',
                 });
             } else if (result.status == 'failed') {
                 await Swal.fire({
                     icon: 'error',
                     title: result.message,
                     text: 'This password is incorrect.',
+                    confirmButtonColor: '#3182CE',
                 });
             } else {
                 alert('Login Failed')
@@ -102,9 +107,6 @@ export default function Login() {
             <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
                 <Stack align={'center'}>
                     <Heading fontSize={'4xl'}>Sign in to your account</Heading>
-                    {/* <Text fontSize={'lg'} color={'gray.600'}>
-                        to enjoy all of our cool <Text color={'blue.400'}>features</Text> ✌️
-                    </Text> */}
                 </Stack>
                 <Box
                     rounded={'lg'}
@@ -130,8 +132,8 @@ export default function Login() {
                                 direction={{ base: 'column', sm: 'row' }}
                                 align={'start'}
                                 justify={'space-between'}>
-                                <Checkbox>Remember me</Checkbox>
-                                <Text color={'blue.400'}>Forgot password?</Text>
+                                {/* <Checkbox>Remember me</Checkbox> */}
+                                {/* <Text color={'blue.400'}>Forgot password?</Text> */}
                             </Stack>
                             <Button
                                 bg={'blue.400'}

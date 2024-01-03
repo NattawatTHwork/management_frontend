@@ -15,7 +15,7 @@ export const checkLoginSuperAdmin = async () => {
         // alert('authen success')
       } else {
         localStorage.removeItem('token');
-        window.location.href = '/adminlogin';
+        window.location.href = '/superadminlogin';
       }
     } catch (error) {
       console.error('Error:', error);

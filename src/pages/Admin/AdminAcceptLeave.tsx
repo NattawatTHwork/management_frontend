@@ -131,6 +131,7 @@ const AdminAcceptLeave = () => {
             showDenyButton: true,
             confirmButtonText: 'Approve',
             denyButtonText: 'Deny',
+            confirmButtonColor: '#3182CE',
         });
 
         if (result.isConfirmed) {
@@ -141,6 +142,7 @@ const AdminAcceptLeave = () => {
                 showCancelButton: true,
                 confirmButtonText: 'Approve',
                 cancelButtonText: 'Cancel',
+                confirmButtonColor: '#3182CE',
             });
 
             if (result.isConfirmed) {
@@ -162,6 +164,7 @@ const AdminAcceptLeave = () => {
                             icon: 'success',
                             title: 'Leave Approved Successfully',
                             text: 'The leave has been approved in the system.',
+                            confirmButtonColor: '#3182CE',
                         });
                         fetchLeaves();
                     } else if (result.status === 'error') {
@@ -169,6 +172,7 @@ const AdminAcceptLeave = () => {
                             icon: 'error',
                             title: 'Failed to Approve Leave',
                             text: 'There was an issue approving the leave in the system.',
+                            confirmButtonColor: '#3182CE',
                         });
                         fetchLeaves();
                     } else {
@@ -186,6 +190,7 @@ const AdminAcceptLeave = () => {
                 showCancelButton: true,
                 confirmButtonText: 'Deny',
                 cancelButtonText: 'Cancel',
+                confirmButtonColor: '#3182CE',
             });
 
             if (result.isConfirmed) {
@@ -207,6 +212,7 @@ const AdminAcceptLeave = () => {
                             icon: 'success',
                             title: 'Leave Approved Successfully',
                             text: 'The leave has been approved in the system.',
+                            confirmButtonColor: '#3182CE',
                         });
                         fetchLeaves();
                     } else if (result.status === 'error') {
@@ -214,6 +220,7 @@ const AdminAcceptLeave = () => {
                             icon: 'error',
                             title: 'Leave Not Approved',
                             text: 'There was an issue with the approval process. The leave has not been approved.',
+                            confirmButtonColor: '#3182CE',
                         });
                         fetchLeaves();
                     } else {
@@ -269,8 +276,8 @@ const AdminAcceptLeave = () => {
                                 .map((leave) => (
                                     <Tr key={leave.leave_requests_id}>
                                         <Td>{leave.leave_type === 1 ? 'Sick Leave' : 'Personal Leave'}</Td>
-                                        <Td>{new Date(leave.start_date).toLocaleDateString('th-TH', { day: '2-digit', month: '2-digit', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: false })}</Td>
-                                        <Td>{new Date(leave.end_date).toLocaleDateString('th-TH', { day: '2-digit', month: '2-digit', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: false })}</Td>
+                                        <Td>{new Date(leave.start_date).toLocaleDateString('th-TH', { day: '2-digit', month: '2-digit', year: 'numeric' })}</Td>
+                                        <Td>{new Date(leave.end_date).toLocaleDateString('th-TH', { day: '2-digit', month: '2-digit', year: 'numeric' })}</Td>
                                         <Td>
                                             <Box as='button' borderRadius='md' bg={leave.status === 1 ? 'green.500' : leave.status === 2 ? 'yellow.500' : 'red.500'} color='white' px={4} h={8}>
                                                 {leave.status === 1 ? 'Approved' : leave.status === 2 ? 'Pending' : 'Denied'}

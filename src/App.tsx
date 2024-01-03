@@ -1,6 +1,6 @@
 import { ChakraProvider } from '@chakra-ui/react'
 import Login from './pages/Login';
-import AdminLogin from './pages/AdminLogin';
+import SuperAdminLogin from './pages/SuperAdminLogin';
 import { Route, Routes } from 'react-router-dom';
 import UserDashboard from './pages/User/UserDashboard';
 import SuperAdminDashboard from './pages/SuperAdmin/SuperAdminDashboard';
@@ -41,7 +41,7 @@ function App() {
         <Route path='/admin/mytask' element={<AdminMyTask />} />
         <Route path='/admin/timesheet' element={<AdminTimeSheet />} />
         <Route path='/admin/accept_leave' element={<AdminAcceptLeave />} />
-        <Route path='/adminlogin' element={<AdminLogin />} />
+        <Route path='/superadminlogin' element={<SuperAdminLogin />} />
         <Route path='/mytask' element={<UserMyTask />} />
         <Route path='/leave' element={<UserLeave />} />
         <Route path='/timeclock' element={<UserTimeClock />} />

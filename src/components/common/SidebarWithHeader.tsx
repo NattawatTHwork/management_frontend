@@ -178,7 +178,7 @@ const MobileNav = ({ onOpen, userData, officeData, ...rest }: MobileProps & { us
     const handleLogout = async () => {
         localStorage.removeItem('token')
         if (userData.role === 1) {
-            window.location.href = '/adminlogin'
+            window.location.href = '/superadminlogin'
 
         } else {
             window.location.href = '/login'

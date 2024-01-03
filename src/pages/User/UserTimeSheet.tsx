@@ -40,27 +40,28 @@ const UserTimeSheet = () => {
         year: new Date().getFullYear(),
     });
 
-    const lastDay = new Date(formSelectData.year, formSelectData.month + 1, 0).getDate();
+    const Day = new Date(formSelectData.year, formSelectData.month, 0).getDate();
     const datas = [];
-    for (let i = 1; i <= lastDay; i++) {
-        const dateString = `${formSelectData.year}-${(formSelectData.month).toString().padStart(2, '0')}-${i.toString().padStart(2, '0')}`;
+    for (let i = 1; i <= Day; i++) {
+        const dateString = `${i.toString().padStart(2, '0')}/${(formSelectData.month).toString().padStart(2, '0')}/${formSelectData.year}`;
         const matchingTimeclock = mytimeclocks.find(timeclock => {
             const clockInDate = new Date((timeclock as any).clock_in);
-            const timeclockDateString = `${clockInDate.getFullYear()}-${(clockInDate.getMonth() + 1).toString().padStart(2, '0')}-${clockInDate.getDate().toString().padStart(2, '0')}`;
+            console.log(clockInDate)
+            const timeclockDateString = `${clockInDate.getDate().toString().padStart(2, '0')}/${(clockInDate.getMonth() + 1).toString().padStart(2, '0')}/${clockInDate.getFullYear()}`;
             return timeclockDateString === dateString;
         });
 
         const matchingLeave = myleaves.find(myleave => {
             const LeaveDate = new Date((myleave as any).leave_date);
-            const leaveDateString = `${LeaveDate.getFullYear()}-${(LeaveDate.getMonth() + 1).toString().padStart(2, '0')}-${LeaveDate.getDate().toString().padStart(2, '0')}`;
+            const leaveDateString = `${LeaveDate.getDate().toString().padStart(2, '0')}/${(LeaveDate.getMonth() + 1).toString().padStart(2, '0')}/${LeaveDate.getFullYear()}`;
             return leaveDateString === dateString;
         });
 
         if (matchingTimeclock) {
             datas.push({
                 date: dateString,
-                clock_in: new Date((matchingTimeclock as any).clock_in).toLocaleTimeString(),
-                clock_out: new Date((matchingTimeclock as any).clock_out).toLocaleTimeString(),
+                clock_in: new Date((matchingTimeclock as any).clock_in).toLocaleTimeString('th-TH'),
+                clock_out: new Date((matchingTimeclock as any).clock_out).toLocaleTimeString('th-TH'),
                 description: null
             });
         } else if (matchingLeave) {
