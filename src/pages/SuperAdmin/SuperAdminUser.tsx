@@ -331,6 +331,15 @@ const SuperAdminUser = () => {
                     confirmButtonColor: '#3182CE',
                 });
                 fetchUsers();
+            } else if (result.status == 'exists') {
+                onCloseModal1();
+                await Swal.fire({
+                    icon: 'error',
+                    title: 'Failed to Add User',
+                    text: 'This email address is already in use.',
+                    confirmButtonColor: '#3182CE',
+                });
+                fetchUsers();
             } else {
                 alert('Failed')
             }

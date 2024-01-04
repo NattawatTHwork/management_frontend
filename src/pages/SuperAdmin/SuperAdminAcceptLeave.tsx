@@ -41,7 +41,10 @@ interface Leave {
     description: string;
     start_date: string;
     end_date: string;
-    status: number;
+    leave_requests_status: number;
+    rank_s: string;
+    firstname: string;
+    lastname: string;
 }
 
 const SuperAdminAcceptLeave = () => {
@@ -58,10 +61,11 @@ const SuperAdminAcceptLeave = () => {
         description: '',
         start_date: '',
         end_date: '',
-        status: 2,
-        deleted: 1,
+        leave_requests_status: 2,
+        rank_s: '',
+        firstname: '',
+        lastname: '',
     });
-
 
     useEffect(() => {
         checkLoginSuperAdmin();
@@ -257,8 +261,11 @@ const SuperAdminAcceptLeave = () => {
                     <Table variant='striped' colorScheme='blue'>
                         <Thead>
                             <Tr>
-                                <Th>Task</Th>
-                                <Th>Date Time</Th>
+                                <Th>Leave Type</Th>
+                                <Th>Name</Th>
+                                <Th>Start Date</Th>
+                                <Th>End Date</Th>
+                                <Th>Status</Th>
                                 <Th>Actions</Th>
                             </Tr>
                         </Thead>
@@ -270,17 +277,18 @@ const SuperAdminAcceptLeave = () => {
                                         || leave.description.toLowerCase().includes(searchTermLower)
                                         || leave.start_date.toLowerCase().includes(searchTermLower)
                                         || leave.end_date.toLowerCase().includes(searchTermLower)
-                                        || (leave.status === 1 ? 'Approved' : leave.status === 2 ? 'Pending' : 'Denied').toLowerCase().includes(searchTermLower);
+                                        || (leave.leave_requests_status === 1 ? 'Approved' : leave.leave_requests_status === 2 ? 'Pending' : 'Denied').toLowerCase().includes(searchTermLower);
                                 })
                                 .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
                                 .map((leave) => (
                                     <Tr key={leave.leave_requests_id}>
                                         <Td>{leave.leave_type === 1 ? 'Sick Leave' : 'Personal Leave'}</Td>
+                                        <Td>{leave.rank_s}{leave.firstname} {leave.lastname}</Td>
                                         <Td>{new Date(leave.start_date).toLocaleDateString('th-TH', { day: '2-digit', month: '2-digit', year: 'numeric' })}</Td>
                                         <Td>{new Date(leave.end_date).toLocaleDateString('th-TH', { day: '2-digit', month: '2-digit', year: 'numeric' })}</Td>
                                         <Td>
-                                            <Box as='button' borderRadius='md' bg={leave.status === 1 ? 'green.500' : leave.status === 2 ? 'yellow.500' : 'red.500'} color='white' px={4} h={8}>
-                                                {leave.status === 1 ? 'Approved' : leave.status === 2 ? 'Pending' : 'Denied'}
+                                            <Box as='button' borderRadius='md' bg={leave.leave_requests_status === 1 ? 'green.500' : leave.leave_requests_status === 2 ? 'yellow.500' : 'red.500'} color='white' px={4} h={8}>
+                                                {leave.leave_requests_status === 1 ? 'Approved' : leave.leave_requests_status === 2 ? 'Pending' : 'Denied'}
                                             </Box>
                                         </Td>
                                         <Td>
@@ -319,6 +327,13 @@ const SuperAdminAcceptLeave = () => {
                         <DrawerBody>
                             <Stack spacing='24px'>
                                 <Box>
+                                    <FormLabel htmlFor='leave_type'>Name</FormLabel>
+                                    <Box style={{ display: 'flex', justifyContent: 'center' }}>
+                                        <FormLabel htmlFor='name'>{formUpdateData.rank_s}{formUpdateData.firstname} {formUpdateData.lastname}</FormLabel>
+                                    </Box>
+                                </Box>
+
+                                <Box>
                                     <FormLabel htmlFor='leave_type'>Leave Type</FormLabel>
                                     <Box style={{ display: 'flex', justifyContent: 'center' }}>
                                         <FormLabel htmlFor='leave_type'>{formUpdateData.leave_type === 1 ? 'Sick Leave' : formUpdateData.leave_type === 2 ? 'Personal Leave' : 'No Leave Type'}</FormLabel>
@@ -335,22 +350,22 @@ const SuperAdminAcceptLeave = () => {
                                 <Box>
                                     <FormLabel htmlFor='start_date'>Start Date</FormLabel>
                                     <Box style={{ display: 'flex', justifyContent: 'center' }}>
-                                        <FormLabel htmlFor='start_date'>{new Date(formUpdateData.start_date).toLocaleDateString('th-TH', { day: '2-digit', month: '2-digit', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: false })}</FormLabel>
+                                        <FormLabel htmlFor='start_date'>{new Date(formUpdateData.start_date).toLocaleDateString('th-TH', { day: '2-digit', month: '2-digit', year: 'numeric' })}</FormLabel>
                                     </Box>
                                 </Box>
 
                                 <Box>
                                     <FormLabel htmlFor='end_date'>End Date</FormLabel>
                                     <Box style={{ display: 'flex', justifyContent: 'center' }}>
-                                        <FormLabel htmlFor='end_date'>{new Date(formUpdateData.end_date).toLocaleDateString('th-TH', { day: '2-digit', month: '2-digit', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: false })}</FormLabel>
+                                        <FormLabel htmlFor='end_date'>{new Date(formUpdateData.end_date).toLocaleDateString('th-TH', { day: '2-digit', month: '2-digit', year: 'numeric' })}</FormLabel>
                                     </Box>
                                 </Box>
 
                                 <Box>
                                     <FormLabel htmlFor='status'>Status</FormLabel>
                                     <Box display="flex" justifyContent="center" alignItems="center">
-                                        <Box as='button' borderRadius='md' bg={formUpdateData.status === 1 ? 'green.500' : formUpdateData.status === 2 ? 'yellow.500' : 'red.500'} color='white' px={4} h={8}>
-                                            <FormLabel htmlFor='description'>{formUpdateData.status === 1 ? 'Approved' : formUpdateData.status === 2 ? 'Pending' : 'Denied'}</FormLabel>
+                                        <Box as='button' borderRadius='md' bg={formUpdateData.leave_requests_status === 1 ? 'green.500' : formUpdateData.leave_requests_status === 2 ? 'yellow.500' : 'red.500'} color='white' px={4} h={8}>
+                                            <FormLabel htmlFor='description'>{formUpdateData.leave_requests_status === 1 ? 'Approved' : formUpdateData.leave_requests_status === 2 ? 'Pending' : 'Denied'}</FormLabel>
                                         </Box>
                                     </Box>
                                 </Box>

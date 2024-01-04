@@ -69,7 +69,7 @@ const UserLeave = () => {
         description: '',
         start_date: '',
         end_date: '',
-        status: 2,
+        leave_requests_status: 2,
         deleted: 1,
     });
 
@@ -276,7 +276,7 @@ const UserLeave = () => {
                     description: '',
                     start_date: '',
                     end_date: '',
-                    status: 2,
+                    leave_requests_status: 2,
                     deleted: 1,
                 });
                 await Swal.fire({
@@ -578,22 +578,22 @@ const UserLeave = () => {
                                 <Box>
                                     <FormLabel htmlFor='start_date'>Start Date</FormLabel>
                                     <Box style={{ display: 'flex', justifyContent: 'center' }}>
-                                        <FormLabel htmlFor='start_date'>{new Date(formUpdateData.start_date).toLocaleDateString('th-TH', { day: '2-digit', month: '2-digit', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: false })}</FormLabel>
+                                        <FormLabel htmlFor='start_date'>{new Date(formUpdateData.start_date).toLocaleDateString('th-TH', { day: '2-digit', month: '2-digit', year: 'numeric' })}</FormLabel>
                                     </Box>
                                 </Box>
 
                                 <Box>
                                     <FormLabel htmlFor='end_date'>End Date</FormLabel>
                                     <Box style={{ display: 'flex', justifyContent: 'center' }}>
-                                        <FormLabel htmlFor='end_date'>{new Date(formUpdateData.end_date).toLocaleDateString('th-TH', { day: '2-digit', month: '2-digit', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: false })}</FormLabel>
+                                        <FormLabel htmlFor='end_date'>{new Date(formUpdateData.end_date).toLocaleDateString('th-TH', { day: '2-digit', month: '2-digit', year: 'numeric' })}</FormLabel>
                                     </Box>
                                 </Box>
 
                                 <Box>
                                     <FormLabel htmlFor='status'>Status</FormLabel>
                                     <Box display="flex" justifyContent="center" alignItems="center">
-                                        <Box as='button' borderRadius='md' bg={formUpdateData.status === 1 ? 'green.500' : formUpdateData.status === 2 ? 'yellow.500' : 'red.500'} color='white' px={4} h={8}>
-                                            <FormLabel htmlFor='description'>{formUpdateData.status === 1 ? 'Approved' : formUpdateData.status === 2 ? 'Pending' : 'Denied'}</FormLabel>
+                                        <Box as='button' borderRadius='md' bg={formUpdateData.leave_requests_status === 1 ? 'green.500' : formUpdateData.leave_requests_status === 2 ? 'yellow.500' : 'red.500'} color='white' px={4} h={8}>
+                                            <FormLabel htmlFor='description'>{formUpdateData.leave_requests_status === 1 ? 'Approved' : formUpdateData.leave_requests_status === 2 ? 'Pending' : 'Denied'}</FormLabel>
                                         </Box>
                                     </Box>
                                 </Box>
