@@ -37,7 +37,9 @@ import {
     FiUser,
     FiMapPin,
     FiSun, 
-    FiMoon
+    FiMoon,
+    FiTool,
+    FiCamera 
 } from 'react-icons/fi'
 import { IconType } from 'react-icons'
 import React, { ReactNode, useEffect, useState } from 'react'
@@ -74,6 +76,7 @@ const LinkItemSuperAdmin: Array<LinkItemProps> = [
     { name: 'Time Sheet', icon: FiClock, link: '/superadmin/timesheet' },
     { name: 'Task', icon: FiCheckSquare, link: '/superadmin/task' },
     { name: 'User', icon: FiUser, link: '/superadmin/user' },
+    { name: 'Equipment', icon: FiTool, link: '/superadmin/equipment' },
     { name: 'Rank', icon: FiTrendingUp, link: '/superadmin/rank' },
     { name: 'Position', icon: FiCompass, link: '/superadmin/position' },
     { name: 'Office', icon: FiMapPin, link: '/superadmin/office' },
@@ -95,6 +98,7 @@ const LinkItemUser: Array<LinkItemProps> = [
     { name: 'Time Sheet', icon: FiClock, link: '/timesheet' },
     { name: 'My Task', icon: FiStar, link: '/mytask' },
     { name: 'Leave', icon: FiSettings, link: '/leave' },
+    { name: 'Equipment Scan', icon: FiCamera, link: '/equipmentscan' },
 ]
 
 const SidebarContent = ({ onClose, userData, officeData, ...rest }: SidebarProps & { userData: any } & { officeData: any }) => {

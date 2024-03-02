@@ -66,6 +66,7 @@ export default function SuperAdminDashboard() {
     const [admin, setAdmin] = useState<admin>();
     const [user, setUser] = useState<user>();
     const [today_status, setTodayStatus] = useState<today_status>();
+    console.log(admin)
 
     useEffect(() => {
         checkLoginSuperAdmin();
@@ -178,15 +179,15 @@ export default function SuperAdminDashboard() {
                         Status All
                     </Heading>
                     <SimpleGrid columns={{ base: 1, md: 3 }} spacing={{ base: 5, lg: 8 }}>
-                        <StatsCard title={'Super Admin'} stat={superadmin?.total.toString() || ''} />
-                        <StatsCard title={'Super Admin Enable'} stat={superadmin?.status_1_count.toString() || ''} />
-                        <StatsCard title={'Super Admin Disable'} stat={superadmin?.status_0_count.toString() || ''} />
-                        <StatsCard title={'Admin'} stat={admin?.total.toString() || ''} />
-                        <StatsCard title={'Admin Enable'} stat={admin?.status_1_count.toString() || ''} />
-                        <StatsCard title={'Admin Disable'} stat={admin?.status_0_count.toString() || ''} />
-                        <StatsCard title={'User'} stat={user?.total.toString() || ''} />
-                        <StatsCard title={'User Enable'} stat={user?.status_1_count.toString() || ''} />
-                        <StatsCard title={'User Disable'} stat={user?.status_0_count.toString() || ''} />
+                        <StatsCard title={'Super Admin'} stat={superadmin?.total?.toString() || '0'} />
+                        <StatsCard title={'Super Admin Enable'} stat={superadmin?.status_1_count?.toString() || '0'} />
+                        <StatsCard title={'Super Admin Disable'} stat={superadmin?.status_0_count?.toString() || '0'} />
+                        <StatsCard title={'Admin'} stat={admin?.total?.toString() || '0'} />
+                        <StatsCard title={'Admin Enable'} stat={admin?.status_1_count?.toString() || '0'} />
+                        <StatsCard title={'Admin Disable'} stat={admin?.status_0_count?.toString() || '0'} />
+                        <StatsCard title={'User'} stat={user?.total?.toString() || '0'} />
+                        <StatsCard title={'User Enable'} stat={user?.status_1_count?.toString() || '0'} />
+                        <StatsCard title={'User Disable'} stat={user?.status_0_count?.toString() || '0'} />
                     </SimpleGrid>
                 </Box>
                 <Divider my={8} borderWidth="2px" borderColor="gray.500" />
