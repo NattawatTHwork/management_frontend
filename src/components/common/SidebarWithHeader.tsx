@@ -89,6 +89,7 @@ const LinkItemAdmin: Array<LinkItemProps> = [
     { name: 'My Task', icon: FiStar, link: '/admin/mytask' },
     { name: 'Task', icon: FiCheckSquare, link: '/admin/task' },
     { name: 'User', icon: FiUser, link: '/admin/user' },
+    { name: 'Equipment Scan', icon: FiCamera, link: '/admin/equipmentscan' },
 
 ]
 

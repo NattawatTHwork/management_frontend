@@ -22,7 +22,8 @@ import SuperAdminTimeSheet from './pages/SuperAdmin/SuperAdminTimeSheet';
 import SuperAdminAcceptLeave from './pages/SuperAdmin/SuperAdminAcceptLeave';
 import AdminAcceptLeave from './pages/Admin/AdminAcceptLeave';
 import SuperAdminEquipment from './pages/SuperAdmin/SuperAdminEquipment';
-import UserMyEquipmentScan from './pages/User/UserMyEquipmentScan';
+import UserEquipmentScan from './pages/User/UserEquipmentScan';
+import AdminEquipmentScan from './pages/Admin/AdminEquipmentScan';
 
 function App() {
   return (
@@ -44,12 +45,13 @@ function App() {
         <Route path='/admin/mytask' element={<AdminMyTask />} />
         <Route path='/admin/timesheet' element={<AdminTimeSheet />} />
         <Route path='/admin/accept_leave' element={<AdminAcceptLeave />} />
+        <Route path='/admin/equipmentscan' element={<AdminEquipmentScan />} />
         <Route path='/superadminlogin' element={<SuperAdminLogin />} />
         <Route path='/mytask' element={<UserMyTask />} />
         <Route path='/leave' element={<UserLeave />} />
         <Route path='/timeclock' element={<UserTimeClock />} />
         <Route path='/timesheet' element={<UserTimeSheet />} />
-        <Route path='/equipmentscan' element={<UserMyEquipmentScan />} />
+        <Route path='/equipmentscan' element={<UserEquipmentScan />} />
         <Route path='/login' element={<Login />} />
       </Routes>
     </ChakraProvider>
