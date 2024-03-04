@@ -39,7 +39,9 @@ import {
     FiSun, 
     FiMoon,
     FiTool,
-    FiCamera 
+    FiCamera,
+    FiList,
+    FiFileText
 } from 'react-icons/fi'
 import { IconType } from 'react-icons'
 import React, { ReactNode, useEffect, useState } from 'react'
@@ -75,8 +77,10 @@ const LinkItemSuperAdmin: Array<LinkItemProps> = [
     { name: 'Accept Leave', icon: FiCheck, link: '/superadmin/accept_leave' },
     { name: 'Time Sheet', icon: FiClock, link: '/superadmin/timesheet' },
     { name: 'Task', icon: FiCheckSquare, link: '/superadmin/task' },
-    { name: 'User', icon: FiUser, link: '/superadmin/user' },
     { name: 'Equipment', icon: FiTool, link: '/superadmin/equipment' },
+    { name: 'Equipment Status', icon: FiList, link: '/superadmin/equipmentstatus' },
+    { name: 'Borrow Return', icon: FiFileText, link: '/superadmin/borrowreturn' },
+    { name: 'User', icon: FiUser, link: '/superadmin/user' },
     { name: 'Rank', icon: FiTrendingUp, link: '/superadmin/rank' },
     { name: 'Position', icon: FiCompass, link: '/superadmin/position' },
     { name: 'Office', icon: FiMapPin, link: '/superadmin/office' },
@@ -90,6 +94,7 @@ const LinkItemAdmin: Array<LinkItemProps> = [
     { name: 'Task', icon: FiCheckSquare, link: '/admin/task' },
     { name: 'User', icon: FiUser, link: '/admin/user' },
     { name: 'Equipment Scan', icon: FiCamera, link: '/admin/equipmentscan' },
+    { name: 'Equipment Status', icon: FiList, link: '/admin/equipmentstatus' },
 
 ]
 
@@ -100,6 +105,7 @@ const LinkItemUser: Array<LinkItemProps> = [
     { name: 'My Task', icon: FiStar, link: '/mytask' },
     { name: 'Leave', icon: FiSettings, link: '/leave' },
     { name: 'Equipment Scan', icon: FiCamera, link: '/equipmentscan' },
+    { name: 'Equipment Status', icon: FiList, link: '/equipmentstatus' },
 ]
 
 const SidebarContent = ({ onClose, userData, officeData, ...rest }: SidebarProps & { userData: any } & { officeData: any }) => {

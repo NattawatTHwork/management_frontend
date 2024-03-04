@@ -24,6 +24,10 @@ import AdminAcceptLeave from './pages/Admin/AdminAcceptLeave';
 import SuperAdminEquipment from './pages/SuperAdmin/SuperAdminEquipment';
 import UserEquipmentScan from './pages/User/UserEquipmentScan';
 import AdminEquipmentScan from './pages/Admin/AdminEquipmentScan';
+import SuperAdminEquipmentStatus from './pages/SuperAdmin/SuperAdminEquipmentStatus';
+import AdminEquipmentStatus from './pages/Admin/AdminEquipmentStatus';
+import UserEquipmentStatus from './pages/User/UserEquipmentStatus';
+import SuperAdminBorrowReturn from './pages/SuperAdmin/SuperAdminBorrowReturn';
 
 function App() {
   return (
@@ -39,6 +43,8 @@ function App() {
         <Route path='/superadmin/timesheet' element={<SuperAdminTimeSheet />} />
         <Route path='/superadmin/accept_leave' element={<SuperAdminAcceptLeave />} />
         <Route path='/superadmin/equipment' element={<SuperAdminEquipment />} />
+        <Route path='/superadmin/equipmentstatus' element={<SuperAdminEquipmentStatus />} />
+        <Route path='/superadmin/borrowreturn' element={<SuperAdminBorrowReturn />} />
         <Route path='/admin' element={<AdminDashboard />} />
         <Route path='/admin/user' element={<AdminUser />} />
         <Route path='/admin/task' element={<AdminTask />} />
@@ -46,12 +52,14 @@ function App() {
         <Route path='/admin/timesheet' element={<AdminTimeSheet />} />
         <Route path='/admin/accept_leave' element={<AdminAcceptLeave />} />
         <Route path='/admin/equipmentscan' element={<AdminEquipmentScan />} />
+        <Route path='/admin/equipmentstatus' element={<AdminEquipmentStatus />} />
         <Route path='/superadminlogin' element={<SuperAdminLogin />} />
         <Route path='/mytask' element={<UserMyTask />} />
         <Route path='/leave' element={<UserLeave />} />
         <Route path='/timeclock' element={<UserTimeClock />} />
         <Route path='/timesheet' element={<UserTimeSheet />} />
         <Route path='/equipmentscan' element={<UserEquipmentScan />} />
+        <Route path='/equipmentstatus' element={<UserEquipmentStatus />} />
         <Route path='/login' element={<Login />} />
       </Routes>
     </ChakraProvider>

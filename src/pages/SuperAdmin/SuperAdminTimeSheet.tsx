@@ -66,7 +66,6 @@ const SuperAdminTimeSheet = () => {
         const dateString = `${i.toString().padStart(2, '0')}/${(formSelectData.month).toString().padStart(2, '0')}/${formSelectData.year}`;
         const matchingTimeclock = mytimeclocks.find(timeclock => {
             const clockInDate = new Date((timeclock as any).clock_in);
-            console.log(clockInDate)
             const timeclockDateString = `${clockInDate.getDate().toString().padStart(2, '0')}/${(clockInDate.getMonth() + 1).toString().padStart(2, '0')}/${clockInDate.getFullYear()}`;
             return timeclockDateString === dateString;
         });
@@ -81,7 +80,7 @@ const SuperAdminTimeSheet = () => {
             datas.push({
                 date: dateString,
                 clock_in: new Date((matchingTimeclock as any).clock_in).toLocaleTimeString('th-TH'),
-                clock_out: new Date((matchingTimeclock as any).clock_out).toLocaleTimeString('th-TH'),
+                clock_out: ((matchingTimeclock as any).clock_out !== null) ? new Date((matchingTimeclock as any).clock_out).toLocaleTimeString('th-TH') : null,
                 description: null
             });
         } else if (matchingLeave) {
@@ -103,7 +102,7 @@ const SuperAdminTimeSheet = () => {
 
     const months = [];
     for (let i = 1; i <= 12; i++) {
-        months.push({ value: i, label: new Date(2000, i - 1, 1).toLocaleString('en-TH', { month: 'long' }) });
+        months.push({ value: i, label: new Date(2000, i - 1, 1).toLocaleString('th-TH', { month: 'long' }) });
     }
 
     const years = [];
@@ -200,7 +199,7 @@ const SuperAdminTimeSheet = () => {
                     <Select name='year' onChange={handleSelectChange} defaultValue={formSelectData.year}>
                         {years.map((y) => (
                             <option key={y.value} value={y.value}>
-                                {y.value}
+                                {y.value + 543}
                             </option>
                         ))}
                     </Select>
@@ -219,7 +218,7 @@ const SuperAdminTimeSheet = () => {
                             {datas
                                 .map((data, index) => (
                                     <Tr key={index}>
-                                        <Td>{data.date}</Td>
+                                        <Td>{new Date(data.date).toLocaleString('th-TH', { day: '2-digit', month: '2-digit', year: 'numeric' })}</Td>
                                         <Td>{data.clock_in === 1 ? 'Sick Leave' : data.clock_in === 2 ? 'Personal Leave' : data.clock_in}</Td>
                                         <Td>{data.clock_out}</Td>
                                         <Td>
