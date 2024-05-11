@@ -36,7 +36,7 @@ import {
     FiCheckSquare,
     FiUser,
     FiMapPin,
-    FiSun, 
+    FiSun,
     FiMoon,
     FiTool,
     FiCamera,
@@ -125,21 +125,21 @@ const SidebarContent = ({ onClose, userData, officeData, ...rest }: SidebarProps
                 </Text>
                 <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
             </Flex>
-            {userData.role === 1 && (
+            {userData && userData.role === 1 && (
                 LinkItemSuperAdmin.map((link) => (
                     <NavItem key={link.name} icon={link.icon} link={link.link}>
                         <a href={link.link}>{link.name}</a>
                     </NavItem>
                 ))
             )}
-            {userData.role === 2 && (
+            {userData && userData.role === 2 && (
                 LinkItemAdmin.map((link) => (
                     <NavItem key={link.name} icon={link.icon} link={link.link}>
                         <a href={link.link}>{link.name}</a>
                     </NavItem>
                 ))
             )}
-            {userData.role === 3 && (
+            {userData && userData.role === 3 && (
                 LinkItemUser.map((link) => (
                     <NavItem key={link.name} icon={link.icon} link={link.link}>
                         <a href={link.link}>{link.name}</a>
@@ -190,7 +190,6 @@ const MobileNav = ({ onOpen, userData, officeData, ...rest }: MobileProps & { us
         localStorage.removeItem('token')
         if (userData.role === 1) {
             window.location.href = '/superadminlogin'
-
         } else {
             window.location.href = '/login'
         }
@@ -241,9 +240,18 @@ const MobileNav = ({ onOpen, userData, officeData, ...rest }: MobileProps & { us
                                     alignItems="flex-start"
                                     spacing="1px"
                                     ml="2">
-                                    <Text fontSize="sm">{userData.rank_s}{userData.firstname} {userData.lastname}</Text>
+                                    <Text fontSize="sm">
+                                        {userData && userData.rank_s && `${userData.rank_s} `}
+                                        {userData && userData.firstname} {userData && userData.lastname}
+                                    </Text>
                                     <Text fontSize="xs" color="gray.600">
-                                        {userData.role === 1 ? 'Super Admin' : userData.role === 2 ? 'Admin' : userData.role === 3 ? 'User' : 'None'}
+                                        {userData && userData.role ?
+                                            userData.role === 1 ? 'Super Admin' :
+                                                userData.role === 2 ? 'Admin' :
+                                                    userData.role === 3 ? 'User' :
+                                                        'None'
+                                            : ''
+                                        }
                                     </Text>
                                 </VStack>
                                 <Box display={{ base: 'none', md: 'flex' }}>
