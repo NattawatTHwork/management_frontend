@@ -9,7 +9,7 @@ import {
     Flex,
 } from '@chakra-ui/react';
 import { ChevronDownIcon } from '@chakra-ui/icons';
-import { checkLoginUser } from '../../components/auth/checkLoginUser';
+import { checkLoginAdmin } from '../../components/auth/checkLoginAdmin';
 import Layout from '../../components/common/Layout';
 import Swal from 'sweetalert2';
 import { Scanner } from '@yudiel/react-qr-scanner';
@@ -25,7 +25,7 @@ const AdminEquipmentScan = () => {
     }, []);
 
     const fetchDevices = async () => {
-        const decoded = await checkLoginUser();
+        const decoded = await checkLoginAdmin();
         setUserID(decoded.user_id);
         try {
             const deviceList = await navigator.mediaDevices.enumerateDevices();
