@@ -120,7 +120,7 @@ const AdminTask = () => {
 
             const result = await response.json();
 
-            if (result.status == 'success') {
+            if (result.status === 'success') {
                 setTasks(result.message);
             } else {
                 console.log('fetch data task failed')
@@ -143,7 +143,7 @@ const AdminTask = () => {
 
             const result = await response.json();
 
-            if (result.status == 'success') {
+            if (result.status === 'success') {
                 setUsers(result.message);
             } else {
                 console.log('fetch data admin failed')
@@ -166,7 +166,7 @@ const AdminTask = () => {
 
             const result = await response.json();
 
-            if (result.status == 'success') {
+            if (result.status === 'success') {
                 setFormUpdateData(result.message[0]);
                 onOpenModal2();
             } else {
@@ -248,7 +248,7 @@ const AdminTask = () => {
                     confirmButtonColor: '#3182CE',
                 });
                 fetchTasks();
-            } else if (result.status == 'error') {
+            } else if (result.status === 'error') {
                 onCloseModal1();
                 await Swal.fire({
                     icon: 'error',
@@ -308,7 +308,7 @@ const AdminTask = () => {
                     confirmButtonColor: '#3182CE',
                 });
                 fetchTasks();
-            } else if (result.status == 'error') {
+            } else if (result.status === 'error') {
                 onCloseModal2();
                 await Swal.fire({
                     icon: 'error',
@@ -349,7 +349,7 @@ const AdminTask = () => {
 
                 const result = await response.json();
 
-                if (result.status == 'success') {
+                if (result.status === 'success') {
                     onCloseModal2();
                     await Swal.fire({
                         icon: 'success',
@@ -469,7 +469,7 @@ const AdminTask = () => {
                     confirmButtonColor: '#3182CE',
                 });
                 fetchTasks();
-            } else if (result.status == 'error') {
+            } else if (result.status === 'error') {
                 onCloseModal1();
                 await Swal.fire({
                     icon: 'error',
@@ -499,10 +499,10 @@ const AdminTask = () => {
 
             const result = await response.json();
 
-            if (result.status == 'success') {
+            if (result.status === 'success') {
                 setFormUpdateResponsible(result.message);
                 onOpenModal4();
-            } else if (result.status == 'no_responsible') {
+            } else if (result.status === 'no_responsible') {
                 setFormUpdateResponsible({
                     task_id: task_id,
                     title: title,
@@ -548,7 +548,7 @@ const AdminTask = () => {
 
                 const result = await response.json();
 
-                if (result.status == 'success') {
+                if (result.status === 'success') {
                     onOpenModal4();
                     await Swal.fire({
                         icon: 'success',

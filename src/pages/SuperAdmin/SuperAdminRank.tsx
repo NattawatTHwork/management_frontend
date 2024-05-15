@@ -78,7 +78,7 @@ const SuperAdminRank = () => {
 
             const result = await response.json();
 
-            if (result.status == 'success') {
+            if (result.status === 'success') {
                 setRanks(result.message);
             } else {
                 console.log('fetch data rank failed')
@@ -101,7 +101,7 @@ const SuperAdminRank = () => {
 
             const result = await response.json();
 
-            if (result.status == 'success') {
+            if (result.status === 'success') {
                 setFormUpdateData(result.message[0]);
                 onOpenModal2();
             } else {
@@ -171,7 +171,7 @@ const SuperAdminRank = () => {
                     confirmButtonColor: '#3182CE',
                 });
                 fetchRanks();
-            } else if (result.status == 'error') {
+            } else if (result.status === 'error') {
                 onCloseModal1();
                 await Swal.fire({
                     icon: 'error',
@@ -230,7 +230,7 @@ const SuperAdminRank = () => {
                     confirmButtonColor: '#3182CE',
                 });
                 fetchRanks();
-            } else if (result.status == 'error') {
+            } else if (result.status === 'error') {
                 onCloseModal2();
                 await Swal.fire({
                     icon: 'error',
@@ -271,7 +271,7 @@ const SuperAdminRank = () => {
 
                 const result = await response.json();
 
-                if (result.status == 'success') {
+                if (result.status === 'success') {
                     onCloseModal2();
                     await Swal.fire({
                         icon: 'success',

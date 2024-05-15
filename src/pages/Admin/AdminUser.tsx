@@ -127,7 +127,7 @@ const AdminUser = () => {
 
             const result = await response.json();
 
-            if (result.status == 'success') {
+            if (result.status === 'success') {
                 setUsers(result.message);
             } else {
                 console.log('fetch data admin failed')
@@ -150,7 +150,7 @@ const AdminUser = () => {
 
             const result = await response.json();
 
-            if (result.status == 'success') {
+            if (result.status === 'success') {
                 setRanks(result.message);
             } else {
                 console.log('fetch data rank failed')
@@ -173,7 +173,7 @@ const AdminUser = () => {
 
             const result = await response.json();
 
-            if (result.status == 'success') {
+            if (result.status === 'success') {
                 setPositions(result.message);
             } else {
                 console.log('fetch data position failed')
@@ -196,7 +196,7 @@ const AdminUser = () => {
 
             const result = await response.json();
 
-            if (result.status == 'success') {
+            if (result.status === 'success') {
                 const userData = result.message[0];
                 const { password_view, ...updatedFormData } = userData;
                 setFormUpdateData({
@@ -225,7 +225,7 @@ const AdminUser = () => {
 
             const result = await response.json();
 
-            if (result.status == 'success') {
+            if (result.status === 'success') {
                 const userData = result.message[0];
                 const { password_view, ...viewuser } = userData;
                 setViewUser({
@@ -321,7 +321,7 @@ const AdminUser = () => {
                     confirmButtonColor: '#3182CE',
                 });
                 fetchUsers();
-            } else if (result.status == 'error') {
+            } else if (result.status === 'error') {
                 onCloseModal1();
                 await Swal.fire({
                     icon: 'error',
@@ -330,7 +330,7 @@ const AdminUser = () => {
                     confirmButtonColor: '#3182CE',
                 });
                 fetchUsers();
-            } else if (result.status == 'exists') {
+            } else if (result.status === 'exists') {
                 onCloseModal1();
                 await Swal.fire({
                     icon: 'error',
@@ -400,7 +400,7 @@ const AdminUser = () => {
                     confirmButtonColor: '#3182CE',
                 });
                 fetchUsers();
-            } else if (result.status == 'error') {
+            } else if (result.status === 'error') {
                 onCloseModal2();
                 await Swal.fire({
                     icon: 'error',
@@ -441,7 +441,7 @@ const AdminUser = () => {
 
                 const result = await response.json();
 
-                if (result.status == 'success') {
+                if (result.status === 'success') {
                     onCloseModal2();
                     await Swal.fire({
                         icon: 'success',
@@ -479,7 +479,7 @@ const AdminUser = () => {
 
             const result = await response.json();
 
-            if (result.status == 'success') {
+            if (result.status === 'success') {
                 await Swal.fire({
                     icon: 'success',
                     title: 'Verification Code Generated Successfully',
@@ -559,8 +559,8 @@ const AdminUser = () => {
                                                     user.role === 3 ? 'User' : 'Unknown Role'}
                                         </Td>
                                         <Td>
-                                            <Box as='button' borderRadius='md' bg={user.status == 1 ? 'green.500' : 'red.500'} color='white' px={4} h={8}>
-                                                {user.status == 1 ? 'Enable' : 'Disable'}
+                                            <Box as='button' borderRadius='md' bg={user.status === 1 ? 'green.500' : 'red.500'} color='white' px={4} h={8}>
+                                                {user.status === 1 ? 'Enable' : 'Disable'}
                                             </Box>
                                         </Td>
                                         <Td>
@@ -879,7 +879,7 @@ const AdminUser = () => {
                                 <Box>
                                     <FormLabel htmlFor='role'>Role</FormLabel>
                                     <Box style={{ display: 'flex', justifyContent: 'center' }}>
-                                        <FormLabel>{viewuser?.role == 1 ? 'Super Admin' : viewuser?.role == 2 ? 'Admin' : 'User'}</FormLabel>
+                                        <FormLabel>{viewuser?.role === 1 ? 'Super Admin' : viewuser?.role === 2 ? 'Admin' : 'User'}</FormLabel>
                                     </Box>
                                 </Box>
 

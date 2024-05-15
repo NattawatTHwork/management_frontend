@@ -19,7 +19,6 @@ import {
     FlexProps,
     Menu,
     MenuButton,
-    MenuDivider,
     MenuItem,
     MenuList,
 } from '@chakra-ui/react'
@@ -304,7 +303,7 @@ const SidebarWithHeader: React.FC<LayoutProps> = ({ children }) => {
 
             const result = await response.json();
 
-            if (result.status == 'success') {
+            if (result.status === 'success') {
                 setOffices(result.message[0]);
             } else {
                 console.log('fetch data rank failed')

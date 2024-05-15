@@ -27,6 +27,43 @@ const UserTimeClock = () => {
     const [isInRange, setIsInRange] = useState(false);
 
     useEffect(() => {
+        const startWatchingPosition = async (setIsInRangeCallback: (value: boolean) => void) => {
+            try {
+                const officesData = await fetchOffices();
+        
+                if (officesData) {
+                    const watchId = Geolocation.watchPosition(
+                        position => {
+                            const userLocation = {
+                                latitude: position.coords.latitude,
+                                longitude: position.coords.longitude,
+                            };
+        
+                            const targetLocation = {
+                                latitude: officesData[0].latitude,
+                                longitude: officesData[0].longitude,
+                            };
+        
+                            const distance = DistanceCalculator(userLocation, targetLocation);
+                            const isInRange = distance <= 50;
+        
+                            setIsInRangeCallback(isInRange);
+                        },
+                        error => console.error(error),
+                        { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+                    );
+        
+                    return watchId;
+                } else {
+                    console.log('Failed to fetch offices data');
+                    return null;
+                }
+            } catch (error) {
+                console.log('Error fetching offices data:', error);
+                return null;
+            }
+        };
+    
         const startWatching = async () => {
             const watchId = await startWatchingPosition(setIsInRange);
             if (watchId) {
@@ -39,43 +76,6 @@ const UserTimeClock = () => {
         fetchTimeClocks();
         startWatching();
     }, []);
-
-    const startWatchingPosition = async (setIsInRangeCallback: (value: boolean) => void) => {
-        try {
-            const officesData = await fetchOffices();
-    
-            if (officesData) {
-                const watchId = Geolocation.watchPosition(
-                    position => {
-                        const userLocation = {
-                            latitude: position.coords.latitude,
-                            longitude: position.coords.longitude,
-                        };
-    
-                        const targetLocation = {
-                            latitude: officesData[0].latitude,
-                            longitude: officesData[0].longitude,
-                        };
-    
-                        const distance = DistanceCalculator(userLocation, targetLocation);
-                        const isInRange = distance <= 50;
-    
-                        setIsInRangeCallback(isInRange);
-                    },
-                    error => console.error(error),
-                    { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
-                );
-    
-                return watchId;
-            } else {
-                console.log('Failed to fetch offices data');
-                return null;
-            }
-        } catch (error) {
-            console.log('Error fetching offices data:', error);
-            return null;
-        }
-    };
     
     const fetchTimeClocks = async () => {
         try {
@@ -92,7 +92,7 @@ const UserTimeClock = () => {
 
             const result = await response.json();
 
-            if (result.status == 'success') {
+            if (result.status === 'success') {
                 setTimeClocks(result.message);
             } else {
                 console.log('fetch data task failed')
@@ -115,7 +115,7 @@ const UserTimeClock = () => {
 
             const result = await response.json();
 
-            if (result.status == 'success') {
+            if (result.status === 'success') {
                 setOffices(result.message);
                 return result.message;
             } else {
@@ -184,7 +184,7 @@ const UserTimeClock = () => {
                             confirmButtonColor: '#3182CE',
                         });
                         fetchTimeClocks();
-                    } else if (result.status == 'error') {
+                    } else if (result.status === 'error') {
                         await Swal.fire({
                             icon: 'error',
                             title: 'Failed to Clock In',
@@ -192,7 +192,7 @@ const UserTimeClock = () => {
                             confirmButtonColor: '#3182CE',
                         });
                         fetchTimeClocks();
-                    } else if (result.status == 'leave') {
+                    } else if (result.status === 'leave') {
                         await Swal.fire({
                             icon: 'warning',
                             title: 'Today you are on leave',
@@ -250,7 +250,7 @@ const UserTimeClock = () => {
                             confirmButtonColor: '#3182CE',
                         });
                         fetchTimeClocks();
-                    } else if (result.status == 'error') {
+                    } else if (result.status === 'error') {
                         await Swal.fire({
                             icon: 'error',
                             title: 'Failed to Clock Out',
@@ -258,7 +258,7 @@ const UserTimeClock = () => {
                             confirmButtonColor: '#3182CE',
                         });
                         fetchTimeClocks();
-                    } else if (result.status == 'wait') {
+                    } else if (result.status === 'wait') {
                         await Swal.fire({
                             icon: 'warning',
                             title: 'Cannot Clock Out Yet',

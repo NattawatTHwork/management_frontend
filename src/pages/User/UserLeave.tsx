@@ -99,7 +99,7 @@ const UserLeave = () => {
 
             const result = await response.json();
 
-            if (result.status == 'success') {
+            if (result.status === 'success') {
                 setLeaves(result.message);
             } else {
                 console.log('fetch data task failed')
@@ -132,7 +132,7 @@ const UserLeave = () => {
 
             const result = await response.json();
 
-            if (result.status == 'success') {
+            if (result.status === 'success') {
                 setFormUpdateData(result.message[0]);
             } else {
                 console.log('fetch data task failed')
@@ -214,7 +214,7 @@ const UserLeave = () => {
                     confirmButtonColor: '#3182CE',
                 });
                 fetchLeaves();
-            } else if (result.status == 'error') {
+            } else if (result.status === 'error') {
                 onCloseModal1();
                 await Swal.fire({
                     icon: 'error',
@@ -223,7 +223,7 @@ const UserLeave = () => {
                     confirmButtonColor: '#3182CE',
                 });
                 fetchLeaves();
-            } else if (result.status == 'overlap') {
+            } else if (result.status === 'overlap') {
                 onCloseModal1();
                 await Swal.fire({
                     icon: 'error',
@@ -286,7 +286,7 @@ const UserLeave = () => {
                     confirmButtonColor: '#3182CE',
                 });
                 fetchLeaves();
-            } else if (result.status == 'error') {
+            } else if (result.status === 'error') {
                 onCloseModal3();
                 await Swal.fire({
                     icon: 'error',
@@ -295,7 +295,7 @@ const UserLeave = () => {
                     confirmButtonColor: '#3182CE',
                 });
                 fetchLeaves();
-            } else if (result.status == 'nofound') {
+            } else if (result.status === 'nofound') {
                 onCloseModal3();
                 await Swal.fire({
                     icon: 'error',
@@ -304,7 +304,7 @@ const UserLeave = () => {
                     confirmButtonColor: '#3182CE',
                 });
                 fetchLeaves();
-            } else if (result.status == 'cant_update') {
+            } else if (result.status === 'cant_update') {
                 onCloseModal3();
                 await Swal.fire({
                     icon: 'error',
@@ -313,7 +313,7 @@ const UserLeave = () => {
                     confirmButtonColor: '#3182CE',
                 });
                 fetchLeaves();
-            } else if (result.status == 'overlap') {
+            } else if (result.status === 'overlap') {
                 onCloseModal3();
                 await Swal.fire({
                     icon: 'error',
@@ -354,7 +354,7 @@ const UserLeave = () => {
 
                 const result = await response.json();
 
-                if (result.status == 'success') {
+                if (result.status === 'success') {
                     await Swal.fire({
                         icon: 'success',
                         title: 'Task Deleted Successfully',
@@ -362,7 +362,7 @@ const UserLeave = () => {
                         confirmButtonColor: '#3182CE',
                     });
                     fetchLeaves();
-                } else if (result.status == 'error') {
+                } else if (result.status === 'error') {
                     await Swal.fire({
                         icon: 'error',
                         title: 'Failed to Delete Task',
@@ -370,7 +370,7 @@ const UserLeave = () => {
                         confirmButtonColor: '#3182CE',
                     });
                     fetchLeaves();
-                } else if (result.status == 'nofound') {
+                } else if (result.status === 'nofound') {
                     await Swal.fire({
                         icon: 'error',
                         title: 'Leave not found',
@@ -378,7 +378,7 @@ const UserLeave = () => {
                         confirmButtonColor: '#3182CE',
                     });
                     fetchLeaves();
-                } else if (result.status == 'cant_update') {
+                } else if (result.status === 'cant_update') {
                     await Swal.fire({
                         icon: 'error',
                         title: 'Update Failed',

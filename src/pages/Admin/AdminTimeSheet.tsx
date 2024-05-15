@@ -112,6 +112,31 @@ const AdminTimeSheet = () => {
 
     useEffect(() => {
         checkLoginAdmin();
+
+        const fetchMyTimeSheets = async () => {
+            try {
+                const token = localStorage.getItem('token');
+                const response = await fetch(`${process.env.REACT_APP_API_URL}/timesheet/my_timesheet/${formSelectData.user_id}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: 'Bearer ' + token,
+                    },
+                    body: JSON.stringify(formSelectData),
+                });
+    
+                const result = await response.json();
+    
+                if (result.status === 'success') {
+                    setMyTimeClocks(result.results_timeclock);
+                    setMyLeaves(result.results_leave);
+                } else {
+                    console.log('fetch data task failed')
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        };
         fetchMyTimeSheets();
         fetchUsers();
     }, [formSelectData]);
@@ -121,31 +146,6 @@ const AdminTimeSheet = () => {
             ...formSelectData,
             [e.target.name]: e.target.value,
         });
-    };
-
-    const fetchMyTimeSheets = async () => {
-        try {
-            const token = localStorage.getItem('token');
-            const response = await fetch(`${process.env.REACT_APP_API_URL}/timesheet/my_timesheet/${formSelectData.user_id}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: 'Bearer ' + token,
-                },
-                body: JSON.stringify(formSelectData),
-            });
-
-            const result = await response.json();
-
-            if (result.status == 'success') {
-                setMyTimeClocks(result.results_timeclock);
-                setMyLeaves(result.results_leave);
-            } else {
-                console.log('fetch data task failed')
-            }
-        } catch (error) {
-            console.log(error);
-        }
     };
 
     const fetchUsers = async () => {
@@ -161,7 +161,7 @@ const AdminTimeSheet = () => {
 
             const result = await response.json();
 
-            if (result.status == 'success') {
+            if (result.status === 'success') {
                 setUsers(result.message);
             } else {
                 console.log('fetch data admin failed')

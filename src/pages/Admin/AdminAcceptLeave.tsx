@@ -86,7 +86,7 @@ const AdminAcceptLeave = () => {
 
             const result = await response.json();
 
-            if (result.status == 'success') {
+            if (result.status === 'success') {
                 setLeaves(result.message);
             } else {
                 console.log('fetch data task failed')
@@ -114,7 +114,7 @@ const AdminAcceptLeave = () => {
 
             const result = await response.json();
 
-            if (result.status == 'success') {
+            if (result.status === 'success') {
                 setFormUpdateData(result.message[0]);
             } else {
                 console.log('fetch data task failed')

@@ -73,7 +73,7 @@ const SuperAdminPosition = () => {
 
             const result = await response.json();
 
-            if (result.status == 'success') {
+            if (result.status === 'success') {
                 setPositions(result.message);
             } else {
                 console.log('fetch data position failed')
@@ -96,7 +96,7 @@ const SuperAdminPosition = () => {
 
             const result = await response.json();
 
-            if (result.status == 'success') {
+            if (result.status === 'success') {
                 setFormUpdateData(result.message[0]);
                 onOpenModal2();
             } else {
@@ -152,7 +152,7 @@ const SuperAdminPosition = () => {
                     confirmButtonColor: '#3182CE',
                 });
                 fetchPositions();
-            } else if (result.status == 'error') {
+            } else if (result.status === 'error') {
                 onCloseModal1();
                 await Swal.fire({
                     icon: 'error',
@@ -197,7 +197,7 @@ const SuperAdminPosition = () => {
                     confirmButtonColor: '#3182CE',
                 });
                 fetchPositions();
-            } else if (result.status == 'error') {
+            } else if (result.status === 'error') {
                 onCloseModal2();
                 await Swal.fire({
                     icon: 'error',
@@ -238,7 +238,7 @@ const SuperAdminPosition = () => {
 
                 const result = await response.json();
 
-                if (result.status == 'success') {
+                if (result.status === 'success') {
                     onCloseModal2();
                     await Swal.fire({
                         icon: 'success',

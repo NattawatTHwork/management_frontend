@@ -57,10 +57,10 @@ const UserEquipmentScan = () => {
             const result = await response.json();
             console.log(result)
 
-            if (result.status == 'success') {
-                if (result.message[0]?.return_date != null || result.message.length == 0) {
+            if (result.status === 'success') {
+                if (result.message[0]?.return_date != null || result.message.length === 0) {
                     fetchThisEquipment(parseInt(equipment_id)).then(equipment_data => {
-                        if (equipment_data[0]?.status == 1) {
+                        if (equipment_data[0]?.status === 1) {
                             Swal.fire({
                                 title: `Do you want to borrow ${equipment_data[0].equipment}?`,
                                 icon: "question",
@@ -115,7 +115,7 @@ const UserEquipmentScan = () => {
                         }
                     })
                 } else {
-                    if (result.message[0].user_id == user_id) {
+                    if (result.message[0].user_id === user_id) {
                         Swal.fire({
                             icon: 'question',
                             title: 'Confirm Return',
@@ -191,7 +191,7 @@ const UserEquipmentScan = () => {
 
             const result = await response.json();
 
-            if (result.status == 'success') {
+            if (result.status === 'success') {
                 return result.message;
             } else {
                 console.log('fetch data equipment failed')

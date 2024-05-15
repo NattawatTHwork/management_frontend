@@ -70,7 +70,7 @@ const SuperAdminOffice = () => {
 
             const result = await response.json();
 
-            if (result.status == 'success') {
+            if (result.status === 'success') {
                 setOffices(result.message);
             } else {
                 console.log('fetch data rank failed')
@@ -132,7 +132,7 @@ const SuperAdminOffice = () => {
                     confirmButtonColor: '#3182CE',
                 });
                 fetchOffices();
-            } else if (result.status == 'error') {
+            } else if (result.status === 'error') {
                 onCloseModal1();
                 await Swal.fire({
                     icon: 'error',

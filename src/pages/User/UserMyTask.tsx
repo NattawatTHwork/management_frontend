@@ -73,7 +73,7 @@ const UserMyTask = () => {
 
             const result = await response.json();
 
-            if (result.status == 'success') {
+            if (result.status === 'success') {
                 setMyTasks(result.message);
             } else {
                 console.log('fetch data task failed')
@@ -104,7 +104,7 @@ const UserMyTask = () => {
                     confirmButtonColor: '#3182CE',
                 });
                 fetchMyTasks();
-            } else if (result.status == 'error') {
+            } else if (result.status === 'error') {
                 await Swal.fire({
                     icon: 'error',
                     title: 'Failed to Accept Task',
@@ -173,8 +173,8 @@ const UserMyTask = () => {
                                         <Td>{task.title}</Td>
                                         <Td>{new Date(task.schedule).toLocaleString('th-TH', { day: '2-digit', month: '2-digit', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: false })}</Td>
                                         <Td>
-                                            <Box as='button' borderRadius='md' bg={task.status == 1 ? 'green.500' : 'red.500'} color='white' px={4} h={8}>
-                                                {task.status == 1 ? 'Enable' : 'Disable'}
+                                            <Box as='button' borderRadius='md' bg={task.status === 1 ? 'green.500' : 'red.500'} color='white' px={4} h={8}>
+                                                {task.status === 1 ? 'Enable' : 'Disable'}
                                             </Box>
                                         </Td>
                                         <Td>

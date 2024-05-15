@@ -58,7 +58,7 @@ const AdminEquipmentStatus = () => {
 
             const result = await response.json();
 
-            if (result.status == 'success') {
+            if (result.status === 'success') {
                 setEquipmentStatus(result.message);
             } else {
                 console.log('fetch data task failed')
@@ -106,7 +106,7 @@ const AdminEquipmentStatus = () => {
                                 .filter((status) => {
                                     const searchTermLower = searchTerm.toLowerCase();
                                     return status.equipment.toLowerCase().includes(searchTermLower) ||
-                                        (status.borrow_date != null && status.return_date == null && (
+                                        (status.borrow_date != null && status.return_date === null && (
                                             (status.rank_s && status.rank_s.toLowerCase().includes(searchTermLower)) ||
                                             (status.firstname && status.firstname.toLowerCase().includes(searchTermLower)) ||
                                             (status.lastname && status.lastname.toLowerCase().includes(searchTermLower))
@@ -116,10 +116,10 @@ const AdminEquipmentStatus = () => {
                                 .map((status, index) => (
                                     <Tr key={index}>
                                         <Td>{status.equipment}</Td>
-                                        <Td>{status.borrow_date != null && status.return_date == null && (status.rank_s + status.firstname + ' ' + status.lastname)}</Td>
+                                        <Td>{status.borrow_date != null && status.return_date === null && (status.rank_s + status.firstname + ' ' + status.lastname)}</Td>
                                         <Td>
-                                            <Box as='button' borderRadius='md' bg={status.borrow_date != null && status.return_date == null ? 'red.500' : 'green.500'} color='white' px={4} h={8}>
-                                                {status.borrow_date != null && status.return_date == null ? 'Not Borrowable' : 'Borrowable'}
+                                            <Box as='button' borderRadius='md' bg={status.borrow_date != null && status.return_date === null ? 'red.500' : 'green.500'} color='white' px={4} h={8}>
+                                                {status.borrow_date != null && status.return_date === null ? 'Not Borrowable' : 'Borrowable'}
                                             </Box>
                                         </Td>
                                     </Tr>

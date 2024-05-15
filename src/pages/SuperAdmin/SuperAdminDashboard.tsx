@@ -89,7 +89,7 @@ export default function SuperAdminDashboard() {
 
             const result = await response.json();
 
-            if (result.status == 'success') {
+            if (result.status === 'success') {
                 setSuperAdmin(result.message[0]);
             } else {
                 console.log('fetch data super admin failed')
@@ -112,7 +112,7 @@ export default function SuperAdminDashboard() {
 
             const result = await response.json();
 
-            if (result.status == 'success') {
+            if (result.status === 'success') {
                 setAdmin(result.message[0]);
             } else {
                 console.log('fetch data admin failed')
@@ -135,7 +135,7 @@ export default function SuperAdminDashboard() {
 
             const result = await response.json();
 
-            if (result.status == 'success') {
+            if (result.status === 'success') {
                 setUser(result.message[0]);
             } else {
                 console.log('fetch data user failed')
@@ -158,7 +158,7 @@ export default function SuperAdminDashboard() {
 
             const result = await response.json();
 
-            if (result.status == 'success') {
+            if (result.status === 'success') {
                 setTodayStatus(result.message[0]);
             } else {
                 console.log('fetch data user failed')

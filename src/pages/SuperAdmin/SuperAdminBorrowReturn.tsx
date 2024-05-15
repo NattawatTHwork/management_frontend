@@ -55,7 +55,7 @@ const SuperAdminBorrowReturn = () => {
 
             const result = await response.json();
 
-            if (result.status == 'success') {
+            if (result.status === 'success') {
                 setBorrowReturn(result.message);
             } else {
                 console.log('fetch data task failed')

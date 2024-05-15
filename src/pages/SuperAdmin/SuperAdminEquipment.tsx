@@ -76,7 +76,7 @@ const SuperAdminEquipment = () => {
 
             const result = await response.json();
 
-            if (result.status == 'success') {
+            if (result.status === 'success') {
                 setEquipments(result.message);
             } else {
                 console.log('fetch data rank failed')
@@ -99,7 +99,7 @@ const SuperAdminEquipment = () => {
 
             const result = await response.json();
 
-            if (result.status == 'success') {
+            if (result.status === 'success') {
                 setFormUpdateData(result.message[0]);
                 onOpenModal2();
             } else {
@@ -174,7 +174,7 @@ const SuperAdminEquipment = () => {
                     confirmButtonColor: '#3182CE',
                 });
                 fetchEquipments();
-            } else if (result.status == 'error') {
+            } else if (result.status === 'error') {
                 onCloseModal1();
                 await Swal.fire({
                     icon: 'error',
@@ -232,7 +232,7 @@ const SuperAdminEquipment = () => {
                     confirmButtonColor: '#3182CE',
                 });
                 fetchEquipments();
-            } else if (result.status == 'error') {
+            } else if (result.status === 'error') {
                 onCloseModal2();
                 await Swal.fire({
                     icon: 'error',
@@ -273,7 +273,7 @@ const SuperAdminEquipment = () => {
 
                 const result = await response.json();
 
-                if (result.status == 'success') {
+                if (result.status === 'success') {
                     onCloseModal2();
                     await Swal.fire({
                         icon: 'success',
@@ -344,8 +344,8 @@ const SuperAdminEquipment = () => {
                                     <Tr key={equipment.equipment_id}>
                                         <Td>{equipment.equipment}</Td>
                                         <Td>
-                                            <Box as='button' borderRadius='md' bg={equipment.status == 1 ? 'green.500' : 'red.500'} color='white' px={4} h={8}>
-                                                {equipment.status == 1 ? 'Enable' : 'Disable'}
+                                            <Box as='button' borderRadius='md' bg={equipment.status === 1 ? 'green.500' : 'red.500'} color='white' px={4} h={8}>
+                                                {equipment.status === 1 ? 'Enable' : 'Disable'}
                                             </Box>
                                         </Td>
                                         <Td>

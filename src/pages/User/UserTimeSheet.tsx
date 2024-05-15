@@ -91,6 +91,32 @@ const UserTimeSheet = () => {
     }
 
     useEffect(() => {
+        const fetchMyTimeSheets = async () => {
+            try {
+                const decoded = await checkLoginUser();
+                const token = localStorage.getItem('token');
+                const response = await fetch(`${process.env.REACT_APP_API_URL}/timesheet/my_timesheet/${decoded.user_id}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: 'Bearer ' + token,
+                    },
+                    body: JSON.stringify(formSelectData),
+                });
+    
+                const result = await response.json();
+    
+                if (result.status === 'success') {
+                    setMyTimeClocks(result.results_timeclock);
+                    setMyLeaves(result.results_leave);
+                } else {
+                    console.log('fetch data task failed')
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        
         fetchMyTimeSheets();
     }, [formSelectData]);
 
@@ -99,32 +125,6 @@ const UserTimeSheet = () => {
             ...formSelectData,
             [e.target.name]: e.target.value,
         });
-    };
-
-    const fetchMyTimeSheets = async () => {
-        try {
-            const decoded = await checkLoginUser();
-            const token = localStorage.getItem('token');
-            const response = await fetch(`${process.env.REACT_APP_API_URL}/timesheet/my_timesheet/${decoded.user_id}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: 'Bearer ' + token,
-                },
-                body: JSON.stringify(formSelectData),
-            });
-
-            const result = await response.json();
-
-            if (result.status == 'success') {
-                setMyTimeClocks(result.results_timeclock);
-                setMyLeaves(result.results_leave);
-            } else {
-                console.log('fetch data task failed')
-            }
-        } catch (error) {
-            console.log(error);
-        }
     };
 
     const ViewLeave = (index: number) => {

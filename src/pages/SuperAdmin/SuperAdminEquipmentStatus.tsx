@@ -58,7 +58,7 @@ const SuperAdminEquipmentStatus = () => {
 
             const result = await response.json();
 
-            if (result.status == 'success') {
+            if (result.status === 'success') {
                 setEquipmentStatus(result.message);
             } else {
                 console.log('fetch data task failed')

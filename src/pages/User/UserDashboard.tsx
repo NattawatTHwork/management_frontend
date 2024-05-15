@@ -69,7 +69,7 @@ export default function UserDashboard() {
 
             const result = await response.json();
 
-            if (result.status == 'success') {
+            if (result.status === 'success') {
                 setTodayTask(result.message);
             } else {
                 console.log('fetch data user failed')

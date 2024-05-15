@@ -6,11 +6,9 @@ import {
     FormControl,
     FormLabel,
     Input,
-    Checkbox,
     Stack,
     Button,
     Heading,
-    Text,
     useColorModeValue,
 } from '@chakra-ui/react'
 import { useEffect, useState, FormEvent } from 'react'
@@ -55,35 +53,35 @@ export default function Login() {
                 } else if (result.message === 3) {
                     window.location.href = '/'
                 }
-            } else if (result.status == 'nofound') {
+            } else if (result.status === 'nofound') {
                 await Swal.fire({
                     icon: 'error',
                     title: result.message,
                     text: 'This account does not exist in the system.',
                     confirmButtonColor: '#3182CE',
                 });
-            } else if (result.status == 'disable') {
+            } else if (result.status === 'disable') {
                 await Swal.fire({
                     icon: 'error',
                     title: result.message,
                     text: 'This account disable.',
                     confirmButtonColor: '#3182CE',
                 });
-            } else if (result.status == 'norights') {
+            } else if (result.status === 'norights') {
                 await Swal.fire({
                     icon: 'error',
                     title: result.message,
                     text: 'This account no rights.',
                     confirmButtonColor: '#3182CE',
                 });
-            } else if (result.status == 'noverify') {
+            } else if (result.status === 'noverify') {
                 await Swal.fire({
                     icon: 'error',
                     title: result.message,
                     text: 'This code verify is incorrect.',
                     confirmButtonColor: '#3182CE',
                 });
-            } else if (result.status == 'failed') {
+            } else if (result.status === 'failed') {
                 await Swal.fire({
                     icon: 'error',
                     title: result.message,
